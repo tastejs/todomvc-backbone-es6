@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<!--
+
+// Copyright 2011 Traceur Authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+-->
+<html>
+<head>
+<title>Traceur</title>
+
+<link rel="stylesheet" href="../third_party/codemirror2/lib/codemirror.css">
+<script src="../third_party/codemirror2/lib/codemirror.js"></script>
+<script src="../third_party/codemirror2/mode/javascript/javascript.js"></script>
+<script src="../bin/traceur.js"></script>
+<style>
+
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Droid+Sans);
+
+html, body {
+  margin: 0;
+}
+
+.CodeMirror-scroll {
+  border: 1px solid #ddd;
+  height: auto;
+  min-height: 300px;
+}
+
+.output-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+html.hide-output .output-wrapper {
+  display: none;
+}
+
+.CodeMirror {
+  width: -webkit-calc(50% - 15px);
+  width: calc(50% - 15px);
+}
+
+html.hide-output .CodeMirror {
+  width: -webkit-calc(100% - 20px);
+  width: calc(100% - 20px);
+}
+
+textarea,
+pre,
+.CodeMirror {
+  font: 12px 'Droid Sans Mono', sans-serif;
+  margin: 10px;
+}
+
+.error {
+  color: red;
+}
+
+.option-button {
+  background: black;
+  border: 0;
+  border-bottom-left-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+  color: white;
+  font: 13px/20px 'Droid Sans', sans-serif;
+  height: 25px;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.options {
+  background: black;
+  border-radius: 5px 0 5px 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+  color: white;
+  font: 13px/20px 'Droid Sans', sans-serif;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 20px;
+}
+
+.options label {
+  display: block;
+}
+
+.options label > input {
+  vertical-align: -2px;
+  margin: 0 1ex 0 0;
+}
+
+.options hr {
+  background: white;
+  border: 0;
+  height: 1px;
+}
+
+.god0 {
+  color: red;
+  -webkit-transition:color 1s ease-in-out;
+  transition: color 1s ease-in-out;
+}
+
+.god1 {
+  color: yellow;
+  -webkit-transition: color 1s ease-in-out;
+  transition: color 1s ease-in-out
+}
+
+</style>
+</head>
+<body>
+<textarea class="input"></textarea>
+<pre class="error"></pre>
+<pre class="eval"></pre>
+
+<textarea class="output"></textarea>
+<pre class="source-map"></pre>
+<button class="option-button">Options</button>
+<div class="options" hidden>
+<label><input class="eval" type="checkbox" checked>Evaluate</label>
+<label><input class="output" type="checkbox" checked>Show generated code</label>
+<label><input class="show-all-toggle" type="checkbox">Show all options</label>
+<hr>
+<div class="traceur-options"></div>
+<button class="all-on">All Options On</button>
+<button class="all-off">All Options Off</button>
+</div>
+
+<script>
+
+(function() {
+  'use strict';
+
+  // Do not show source maps by default.
+  traceur.options.sourceMaps = false;
+
+  var SourceMapConsumer = traceur.outputgeneration.SourceMapConsumer;
+  var SourceMapGenerator = traceur.outputgeneration.SourceMapGenerator;
+  var ProjectWriter = traceur.outputgeneration.ProjectWriter;
+  var ErrorReporter = traceur.util.ErrorReporter;
+
+  var hasError = false;
+  var debouncedCompile = debounced(compile, 200, 2000);
+  var input = CodeMirror.fromTextArea(document.querySelector('.input'), {
+    onChange: debouncedCompile,
+    onCursorActivity: debouncedCompile.delay,
+    lineNumbers: true
+  });
+  var outputCheckbox = document.querySelector('input.output');
+  var output = CodeMirror.fromTextArea(
+      document.querySelector('textarea.output'), {
+        lineNumbers: true,
+        readOnly: true
+      });
+  output.getWrapperElement().classList.add('output-wrapper');
+  var evalCheckbox = document.querySelector('input.eval');
+  var evalElement = document.querySelector('pre.eval');
+  var errorElement = document.querySelector('pre.error');
+  var sourceMapElement = document.querySelector('pre.source-map');
+
+  if (location.hash)
+    input.setValue(decodeURIComponent(location.hash.slice(1)));
+
+  evalCheckbox.addEventListener('click', function(e) {
+    evalElement.hidden = !evalCheckbox.checked;
+  }, false);
+
+  outputCheckbox.addEventListener('click', function(e) {
+    document.documentElement.classList[
+        outputCheckbox.checked ? 'remove' : 'add']('hide-output');
+  }, false);
+
+  /**
+   * debounce time = min(tmin + [func's execution time], tmax).
+   *
+   * @param {Function} func
+   * @param {number} tmin Minimum debounce time
+   * @param {number} tmax Maximum debounce time
+   * @return {Function} A debounced version of func with an attached "delay"
+   *     function. "delay" will delay any pending debounced function by the
+   *     current debounce time. If there are none pending, it is a no-op.
+   */
+  function debounced(func, tmin, tmax) {
+    var id = 0;
+    var t = tmin;
+    function wrappedFunc() {
+      var start = Date.now();
+      id = 0;
+      func();
+      t = tmin + Date.now() - start; // tmin + [func's execution time]
+      t = t < tmax ? t : tmax;
+    }
+    function debouncedFunc() {
+      clearTimeout(id);
+      id = setTimeout(wrappedFunc, t);
+    }
+    // id is nonzero only when a debounced function is pending.
+    debouncedFunc.delay = function() { id && debouncedFunc(); }
+    return debouncedFunc;
+  }
+
+  function setOptionsFromSource(source) {
+    var re = /^\/\/ Options:\s*(.+)$/mg;
+    var optionLines = source.match(re);
+    if (optionLines) {
+      optionLines.forEach(function(line) {
+        re.lastIndex = 0;
+        var m = re.exec(line);
+        try {
+          traceur.options.fromString(m[1]);
+        } catch (ex) {
+          // Ignore unknown options.
+        }
+      });
+      createOptions();
+    }
+  }
+
+  function compile() {
+    hasError = false;
+    output.setValue('');
+    errorElement.textContent = sourceMapElement.textContent = '';
+
+    var reporter = new ErrorReporter();
+    reporter.reportMessageInternal = function(location, format, args) {
+      errorElement.textContent +=
+         ErrorReporter.format(location, format, args) + '\n';
+    };
+
+    var url = location.href;
+    var project = new traceur.semantics.symbols.Project(url);
+    var name = 'repl';
+    var contents = input.getValue();
+    if (history.replaceState)
+      history.replaceState(null, document.title,
+                           '#' + encodeURIComponent(contents));
+    setOptionsFromSource(contents);
+    var sourceFile = new traceur.syntax.SourceFile(name, contents);
+    project.addFile(sourceFile);
+    var res = traceur.codegeneration.Compiler.compile(reporter, project, false);
+    if (reporter.hadError()) {
+      hasError = true;
+    } else {
+      var options;
+      if (traceur.options.sourceMaps) {
+        var config = {file: 'traceured.js'};
+        var sourceMapGenerator = new SourceMapGenerator(config);
+        options = {sourceMapGenerator: sourceMapGenerator};
+      }
+
+      var source = ProjectWriter.write(res, options);
+      output.setValue(source);
+
+      if (evalCheckbox.checked) {
+        try {
+          evalElement.textContent = ('global', eval)(source);
+        } catch(ex) {
+          hasError = true;
+          errorElement.textContent = ex;
+        }
+      }
+
+      if (traceur.options.sourceMaps) {
+        var renderedMap = renderSourceMap(source, options.sourceMap);
+        sourceMapElement.textContent = renderedMap;
+      }
+    }
+
+    errorElement.hidden = !hasError;
+  }
+
+  function createOptionRow(name) {
+    var label = document.createElement('label');
+    label.textContent = name;
+    var cb = label.insertBefore(document.createElement('input'),
+                                label.firstChild);
+    cb.type = 'checkbox';
+    var checked = traceur.options[name];
+    cb.checked = checked;
+    cb.indeterminate = checked === null;
+    cb.onclick = function() {
+      traceur.options[name] = cb.checked;
+      createOptions();
+      compile();
+    };
+    return label;
+  }
+
+  var options = [
+    'experimental',
+    'debug',
+    'sourceMaps',
+    'freeVariableChecker',
+    'validate'
+  ];
+
+  var showAllOpts = false;
+  var allOptsLength = Object.keys(traceur.options).length;
+  var showMax = allOptsLength;
+
+  function createOptions() {
+    var optionsDiv = document.querySelector('.traceur-options');
+    optionsDiv.textContent = '';
+    if (showAllOpts) {
+      var i = 0;
+      Object.keys(traceur.options).forEach(function(name) {
+        if (i++ >= showMax || options.lastIndexOf(name) >= 0)
+          return;
+        optionsDiv.appendChild(createOptionRow(name));
+      });
+      optionsDiv.appendChild(document.createElement('hr'));
+    }
+    options.forEach(function(name) {
+      optionsDiv.appendChild(createOptionRow(name));
+    });
+  }
+
+  createOptions();
+
+  function rebuildOptions() {
+    var optionsDiv = document.querySelector('.traceur-options');
+    optionsDiv.innerHTML = '';
+    createOptions();
+  }
+
+  document.querySelector('.all-on').addEventListener('click',
+      function() {
+        traceur.options.reset();
+        rebuildOptions();
+      });
+
+  document.querySelector('.all-off').addEventListener('click',
+      function() {
+        traceur.options.reset(true);
+        rebuildOptions();
+      });
+
+  document.querySelector('.show-all-toggle').addEventListener('click',
+      function() {
+        showAllOpts = !showAllOpts;
+        rebuildOptions();
+      });
+
+  document.querySelector('.option-button').addEventListener('click',
+      function() {
+        var optionsDiv = document.querySelector('.options');
+        optionsDiv.hidden = !optionsDiv.hidden;
+      });
+
+  function renderSourceMap(source, sourceMap) {
+    var consumer = new SourceMapConsumer(sourceMap);
+    var lines = source.split('\n');
+    var lineNumberTable = lines.map(function(line, lineNo) {
+      var generatedPosition = {
+        line: lineNo + 1,
+        column: 0
+      };
+      var position = consumer.originalPositionFor(generatedPosition);
+      var lineDotColumn = position.line + '.' + position.column;
+      return (lineNo + 1) + ': ' + line + ' -> ' + lineDotColumn;
+    });
+    return 'SourceMap:\n' + lineNumberTable.join('\n');
+  }
+
+  var codeCur = 0;
+  var code = 'UUDDLRLRBA'.split('').map(function(k) {
+    return {'U':38, 'D':40, 'L':37, 'R':39, 'A':65, 'B':66}[k];
+  });
+
+  document.addEventListener('keyup', function(e) {
+    if (e.keyCode !== code[codeCur++])
+      codeCur = +(e.keyCode === code[0]);
+    if (codeCur === code.length) {
+      var optionsDiv = document.querySelector('.options');
+      optionsDiv.hidden = false;
+      optionsDiv.classList.add('god0');
+      window.setInterval(updateTransition, 500);
+      showAllOpts = !showAllOpts;
+      showMax = 0;
+      rebuildAnimate();
+    }
+  })
+
+  function rebuildAnimate() {
+    if (showMax++ >= allOptsLength)
+      return;
+    rebuildOptions();
+    var optionsDiv = document.querySelector('.options');
+    setTimeout(rebuildAnimate, 1000);
+  }
+
+  function updateTransition() {
+    var optionsDiv;
+    for (var i = 0; i < 2; i++) {
+      if (optionsDiv = document.querySelector('.god' + i)) {
+        optionsDiv.classList.remove('god' + i);
+        optionsDiv.classList.add('god' + (i + 1) % 2);
+        break;
+      }
+    }
+  }
+
+})();
+
+</script>
+</body>
+</html>

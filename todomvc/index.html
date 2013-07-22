@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <script src="../bin/traceur.js"></script>
+    <script src="../src/bootstrap.js"></script>
+    <script>
+      traceur.options.experimental = true;
+    </script>
+
+ <link href="todos.css" media="all" rel="stylesheet" type="text/css"/>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.1/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.0/backbone.localStorage-min.js"></script>
+
+  </head>
+  <body>
+  
+<!--
+
+Notes 
+
+This is just a proof of concept. It currently uses an older version of Backbone and I don't yet have clarity on where Modules best fit into this world. Should each logical block be a module? (todo, todo list etc?)
+
+Once I do have a better idea, I may investigate how the Module Loader API could be used here and potentially other future platform pieces to avoid the JS templates.
+
+If we used https://github.com/Polymer/mdv the challenge would be doesn't this technically give you enough to avoid using Backbone? Would require some plumbing.
+
+-->
+
+<div id="todoapp">
+
+      <div class="title">
+        <h1>Todos</h1>
+      </div>
+
+      <div class="content">
+
+        <div id="create-todo">
+          <input id="new-todo" placeholder="What needs to be done?" type="text" />
+          <span class="ui-tooltip-top" style="display:none;">Press Enter to save this task</span>
+        </div>
+
+        <div id="todos">
+          <input class="check mark-all-done" type="checkbox"/>
+          <label for="check-all">Mark all as complete</label>
+          <ul id="todo-list"></ul>
+        </div>
+
+        <div id="todo-stats"></div>
+
+      </div>
+
+    </div>
+
+
+<script type="text/traceur">
+
+
+// Todo Model
+// ----------
+
+// Our basic **Todo** model has `content`, `order`, and `done` attributes.
+class Todo extends Backbone.Model {
+
+    // Default attributes for the todo.
+    defaults() {
+        return {
+            content: "empty todo...",
+            done: false
+        }
+    };
+
+        // Ensure that each todo created has `content`.
+    initialize() {
+        if (!this.get("content")) {
+            this.set({ "content": this.defaults().content });
+        }
+    }
+
+    // Toggle the `done` state of this todo item.
+    toggle() {
+        this.save({ done: !this.get("done") });
+    }
+
+    // Remove this Todo from *localStorage* and delete its view.
+    clear() {
+        this.destroy();
+    }
+
+}
+
+
+// Todo Collection
+// ---------------
+
+
+// The collection of todos is backed by *localStorage* instead of a remote
+// server.
+class TodoList extends Backbone.Collection {
+
+    constructor(options){
+
+      this.model = Todo; // Reference to this collection's model.
+      this.localStorage = new Store("todos-backbone");
+
+      super(options);
+    }
+
+    // Filter down the list of all todo items that are finished.
+    done() {
+        return this.filter((todo) => todo.get('done'));
+    }
+
+    // Filter down the list to only todo items that are still not finished.
+    remaining() {
+        return this.without.apply(this, this.done());
+    }
+
+    // We keep the Todos in sequential order, despite being saved by unordered
+    // GUID in the database. This generates the next order number for new items.
+    nextOrder() {
+        if (!length) return 1;
+        return this.last().get('order') + 1;
+    }
+
+    // Todos are sorted by their original insertion order.
+    comparator(todo) {
+        return todo.get('order');
+    }
+
+}
+
+// Create our global collection of **Todos**.
+var Todos = new TodoList();
+
+
+// Todo Item View
+// --------------
+
+class TodoView extends Backbone.View {
+    
+    constructor (options) {
+
+        this.model = Todo; //options.model;
+
+        this.input = '';
+
+        //... is a list tag.
+        this.tagName = "li";
+
+        // The DOM events specific to an item.
+        this.events = {
+            "click .check": "toggleDone",
+            "dblclick label.todo-content": "edit",
+            "click span.todo-destroy": "clear",
+            "keypress .todo-input": "updateOnEnter",
+            "blur .todo-input": "close"
+        };
+
+        
+        // Cache the template function for a single item.
+        this.template = _.template($('#item-template').html());
+
+        _.bindAll(this, 'render', 'close', 'remove');
+        this.model.bind('change', this.render);
+        this.model.bind('destroy', this.remove);
+
+        super(options);
+    }
+
+
+    // Re-render the contents of the todo item.
+    render() {
+        this.$el.html(this.template(this.model.toJSON()));
+        this.input = this.$('.todo-input');
+        return this;
+    }
+
+    // Toggle the `"done"` state of the model.
+    toggleDone() {
+        this.model.toggle();
+    }
+
+    // Switch this view into `"editing"` mode, displaying the input field.
+    edit() {
+        this.$el.addClass("editing");
+        this.input.focus();
+    }
+
+    // Close the `"editing"` mode, saving changes to the todo.
+    close() {
+        this.model.save({ content: this.input.val() });
+        this.$el.removeClass("editing");
+    }
+
+    // If you hit `enter`, we're through editing the item.
+    updateOnEnter(e) {
+        if (e.keyCode == 13) close();
+    }
+
+    // Remove the item, destroy the model.
+    clear() {
+        this.model.clear();
+    }
+
+}
+
+
+// The Application
+// ---------------
+
+// Our overall **AppView** is the top-level piece of UI.
+class AppView extends Backbone.View {
+
+    // Delegated events for creating new items, and clearing completed ones.
+
+    constructor () {
+        
+        this.setElement($("#todoapp"), true)
+
+        this.events = {
+            "keypress #new-todo": "createOnEnter",
+            "keyup #new-todo": "showTooltip",
+            "click .todo-clear a": "clearCompleted",
+            "click .mark-all-done": "toggleAllComplete"
+        };
+
+        // At initialization we bind to the relevant events on the `Todos`
+        // collection, when items are added or changed. Kick things off by
+        // loading any preexisting todos that might be saved in *localStorage*.
+        _.bindAll(this, 'addOne', 'addAll', 'render', 'toggleAllComplete');
+
+        this.input = this.$("#new-todo");
+
+        this.allCheckbox = this.$(".mark-all-done")[0];
+
+        this.statsTemplate = _.template($('#stats-template').html());
+
+        //this.allCheckbox =  HTMLInputElement;
+        //this.statsTemplate =  (params) => string;
+        this.tooltipTimeout = null;
+
+
+        Todos.bind('add', this.addOne);
+        Todos.bind('reset', this.addAll);
+        Todos.bind('all', this.render);
+
+        Todos.fetch();
+
+        super();
+
+    }
+
+
+    // Re-rendering the App just means refreshing the statistics -- the rest
+    // of the app doesn't change.
+    render() {
+        var done = Todos.done().length;
+        var remaining = Todos.remaining().length;
+
+        this.$('#todo-stats').html(this.statsTemplate({
+            total: Todos.length,
+            done: done,
+            remaining: remaining
+        }));
+
+        this.allCheckbox.checked = !remaining;
+    }
+
+    // Add a single todo item to the list by creating a view for it, and
+    // appending its element to the `<ul>`.
+    addOne(todo) {
+        var view = new TodoView({ model: todo });
+        this.$("#todo-list").append(view.render().el);
+    }
+
+    // Add all items in the **Todos** collection at once.
+    addAll() {
+        Todos.each(this.addOne);
+    }
+
+    // Generate the attributes for a new Todo item.
+    newAttributes() {
+        return {
+            content: this.input.val(),
+            order: Todos.nextOrder(),
+            done: false
+        };
+    }
+
+    // If you hit return in the main input field, create new **Todo** model,
+    // persisting it to *localStorage*.
+    createOnEnter(e) {
+        if (e.keyCode != 13) return;
+        Todos.create(this.newAttributes());
+        this.input.val('');
+        
+    }
+
+    // Clear all done todo items, destroying their models.
+    clearCompleted() {
+        _.each(Todos.done(), (todo) => todo.clear());
+        return false;
+    }
+
+    
+    // Lazily show the tooltip that tells you to press `enter` to save
+    // a new todo item, after one second.
+    showTooltip(e) {
+        var tooltip = $(".ui-tooltip-top");
+        var val = this.input.val();
+        tooltip.fadeOut();
+        if (this.tooltipTimeout) clearTimeout(this.tooltipTimeout);
+        if (val == '' || val == this.input.attr('placeholder')) return;
+        this.tooltipTimeout = _.delay(() => tooltip.show().fadeIn(), 1000);
+    }
+
+    toggleAllComplete() {
+        var done = this.allCheckbox.checked;
+        Todos.each((todo) => todo.save({ 'done': done }));
+    }
+
+}
+
+// Load the application once the DOM is ready, using `jQuery.ready`:
+
+$(() => {
+    // Finally, we kick things off by creating the **App**.
+    new AppView();
+});
+
+
+
+</script>
+
+<!-- Templates -->
+
+    <script type="text/template" id="item-template">
+      <div class="todo <%= done ? 'done' : '' %>">
+        <div class="display">
+          <input class="check" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+          <label class="todo-content"><%= content %></label>
+          <span class="todo-destroy"></span>
+        </div>
+        <div class="edit">
+          <input class="todo-input" type="text" value="<%= content %>" />
+        </div>
+      </div>
+    </script>
+
+    <script type="text/template" id="stats-template">
+      <% if (total) { %>
+        <span class="todo-count">
+          <span class="number"><%= remaining %></span>
+          <span class="word"><%= remaining == 1 ? 'item' : 'items' %></span> left.
+        </span>
+      <% } %>
+      <% if (done) { %>
+        <span class="todo-clear">
+          <a href="#">
+            Clear <span class="number-done"><%= done %></span>
+            completed <span class="word-done"><%= done == 1 ? 'item' : 'items' %></span>
+          </a>
+        </span>
+      <% } %>
+    </script>
+  </body>
+</html>
