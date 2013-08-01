@@ -64,7 +64,9 @@ class TodoList extends Backbone.Collection {
 	// We keep the Todos in sequential order, despite being saved by unordered
 	// GUID in the database. This generates the next order number for new items.
 	nextOrder() {
-		if (!length) return 1;
+		if (!this.length) {
+			return 1;
+		}
 		return this.last().get('order') + 1;
 	}
 
@@ -88,13 +90,16 @@ class TodoView extends Backbone.View {
 		//... is a list tag.
 		this.tagName = 'li';
 
-		this.ENTER_KEY = 13;
-
 		// The TodoView listens for changes to its model, re-rendering. Since there's
 		// a one-to-one correspondence between a **Todo** and a **TodoView** in this
 		// app, we set a direct reference on the model for convenience.
 
         this.model = Todo; 
+
+		// Cache the template function for a single item.
+		this.template = _.template($('#item-template').html());
+
+		this.ENTER_KEY = 13;
 
         this.input = '';
 
@@ -107,15 +112,11 @@ class TodoView extends Backbone.View {
 			'blur .todo-input': 'close'
 		};
 
-		super(options);
-
-
-		// Cache the template function for a single item.
-		this.template = _.template($('#item-template').html());
+        super(options);
 
         this.listenTo(this.model, 'change', this.render);
         this.listenTo(this.model, 'destroy', this.remove);
-        
+
 	}
 
 	// Re-render the contents of the todo item.
@@ -161,7 +162,6 @@ class TodoView extends Backbone.View {
 class AppView extends Backbone.View {
 
 	constructor () {
-
 
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
@@ -227,7 +227,9 @@ class AppView extends Backbone.View {
 
 	// Add all items in the **Todos** collection at once.
 	addAll() {
-		Todos.each(this.addOne);
+		//Todos.each(this.addOne);
+		this.$('#todo-list').html('');
+		Todos.each(this.addOne, this);
 	}
 
 	// Generate the attributes for a new Todo item.
