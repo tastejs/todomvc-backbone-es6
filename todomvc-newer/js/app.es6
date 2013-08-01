@@ -17,7 +17,7 @@ class Todo extends Backbone.Model {
 	// Ensure that each todo created has `content`.
 	initialize() {
 		if (!this.get('content')) {
-			this.set({ 'content': this.defaults().content });
+			this.set({ content: this.defaults().content });
 		}
 	}
 
@@ -41,7 +41,7 @@ class Todo extends Backbone.Model {
 // server.
 class TodoList extends Backbone.Collection {
 
-	constructor(options){
+	constructor(options) {
 		// Reference to this collection's model.
 		this.model = Todo;
 
@@ -67,6 +67,7 @@ class TodoList extends Backbone.Collection {
 		if (!this.length) {
 			return 1;
 		}
+
 		return this.last().get('order') + 1;
 	}
 
@@ -145,7 +146,7 @@ class TodoView extends Backbone.View {
 
 	// If you hit `enter`, we're through editing the item.
 	updateOnEnter(e) {
-		if (e.keyCode === TodoView.ENTER_KEY) {
+		if (e.which === TodoView.ENTER_KEY) {
 			close();
 		}
 	}
@@ -247,7 +248,10 @@ class AppView extends Backbone.View {
 	// If you hit return in the main input field, create new **Todo** model,
 	// persisting it to *localStorage*.
 	createOnEnter(e) {
-		if (e.keyCode != 13) return;
+		if (e.which !== 13) {
+			return;
+		}
+
 		Todos.create(this.newAttributes());
 		this.input.val('');
 	}
