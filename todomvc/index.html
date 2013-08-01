@@ -169,9 +169,12 @@ class TodoView extends Backbone.View {
         // Cache the template function for a single item.
         this.template = _.template($('#item-template').html());
 
-        _.bindAll(this, 'render', 'close', 'remove');
-        this.model.bind('change', this.render);
-        this.model.bind('destroy', this.remove);
+        this.listenTo(this.model, 'change', this.render);
+        this.listenTo(this.model, 'destroy', this.remove);
+
+        //_.bindAll(this, 'render', 'close', 'remove');
+        //this.model.bind('change', this.render);
+        //this.model.bind('destroy', this.remove);
 
         super(options);
     }
@@ -249,9 +252,13 @@ class AppView extends Backbone.View {
         this.tooltipTimeout = null;
 
 
-        Todos.bind('add', this.addOne);
-        Todos.bind('reset', this.addAll);
-        Todos.bind('all', this.render);
+        this.listenTo(Todos, 'add', this.addOne);
+        this.listenTo(Todos, 'reset', this.addAll);
+        this.listenTo(Todos, 'all', this.render);
+
+        //Todos.bind('add', this.addOne);
+        //Todos.bind('reset', this.addAll);
+        //Todos.bind('all', this.render);
 
         Todos.fetch();
 
