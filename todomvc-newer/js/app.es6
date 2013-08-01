@@ -5,30 +5,30 @@
 // Our basic **Todo** model has `content`, `order`, and `done` attributes.
 class Todo extends Backbone.Model {
 
-    // Default attributes for the todo.
-    defaults() {
-        return {
-            content: "",
-            done: false
-        }
-    };
+	// Default attributes for the todo.
+	defaults() {
+		return {
+			content: '',
+			done: false
+		};
+	};
 
-    // Ensure that each todo created has `content`.
-    initialize() {
-        if (!this.get("content")) {
-            this.set({ "content": this.defaults().content });
-        }
-    }
+	// Ensure that each todo created has `content`.
+	initialize() {
+		if (!this.get('content')) {
+			this.set({ 'content': this.defaults().content });
+		}
+	}
 
-    // Toggle the `done` state of this todo item.
-    toggle() {
-        this.save({ done: !this.get("done") });
-    }
+	// Toggle the `done` state of this todo item.
+	toggle() {
+		this.save({ done: !this.get('done') });
+	}
 
-    // Remove this Todo from *localStorage* and delete its view.
-    clear() {
-        this.destroy();
-    }
+	// Remove this Todo from *localStorage* and delete its view.
+	clear() {
+		this.destroy();
+	}
 
 }
 
@@ -40,16 +40,15 @@ class Todo extends Backbone.Model {
 // server.
 class TodoList extends Backbone.Collection {
 
-    constructor(options){
+	constructor(options){
+		// Reference to this collection's model.
+		this.model = Todo;
 
-      // Reference to this collection's model.
-      this.model = Todo; 
+		// Save all of the todo items under the `'todos'` namespace.
+		this.localStorage = new Backbone.LocalStorage('todos-traceur-backbone');
 
-      // Save all of the todo items under the `'todos'` namespace.
-      this.localStorage = new Backbone.LocalStorage("todos-traceur-backbone");
-
-      super(options);
-    }
+		super(options);
+	}
 
 	// Filter down the list of all todo items that are finished.
 	done() {
@@ -94,14 +93,14 @@ class TodoView extends Backbone.View {
 		// a one-to-one correspondence between a **Todo** and a **TodoView** in this
 		// app, we set a direct reference on the model for convenience.
 
-        this.model = Todo; 
+		this.model = Todo;
 
 		// Cache the template function for a single item.
 		this.template = _.template($('#item-template').html());
 
 		this.ENTER_KEY = 13;
 
-        this.input = '';
+		this.input = '';
 
 		// The DOM events specific to an item.
 		this.events = {
@@ -112,10 +111,10 @@ class TodoView extends Backbone.View {
 			'blur .todo-input': 'close'
 		};
 
-        super(options);
+		super(options);
 
-        this.listenTo(this.model, 'change', this.render);
-        this.listenTo(this.model, 'destroy', this.remove);
+		this.listenTo(this.model, 'change', this.render);
+		this.listenTo(this.model, 'destroy', this.remove);
 
 	}
 
@@ -145,7 +144,9 @@ class TodoView extends Backbone.View {
 
 	// If you hit `enter`, we're through editing the item.
 	updateOnEnter(e) {
-		if (e.keyCode == TodoView.ENTER_KEY) close();
+		if (e.keyCode === TodoView.ENTER_KEY) {
+			close();
+		}
 	}
 
 	// Remove the item, destroy the model.
@@ -162,6 +163,7 @@ class TodoView extends Backbone.View {
 class AppView extends Backbone.View {
 
 	constructor () {
+
 
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
@@ -185,9 +187,9 @@ class AppView extends Backbone.View {
 		this.footerElement = this.$('#footer')[0];
 		this.statsTemplate = _.template($('#stats-template').html());
 
-        this.listenTo(Todos, 'add', this.addOne);
-        this.listenTo(Todos, 'reset', this.addAll);
-        this.listenTo(Todos, 'all', this.render);
+		this.listenTo(Todos, 'add', this.addOne);
+		this.listenTo(Todos, 'reset', this.addAll);
+		this.listenTo(Todos, 'all', this.render);
 
 
 		Todos.fetch();
