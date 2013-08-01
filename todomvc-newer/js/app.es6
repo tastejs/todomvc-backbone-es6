@@ -1,5 +1,7 @@
 /*jshint esnext:true */
 
+let ENTER_KEY = 13;
+
 // Todo Model
 // ----------
 
@@ -100,8 +102,6 @@ class TodoView extends Backbone.View {
 		// Cache the template function for a single item.
 		this.template = _.template($('#item-template').html());
 
-		this.ENTER_KEY = 13;
-
 		this.input = '';
 
 		// The DOM events specific to an item.
@@ -146,7 +146,7 @@ class TodoView extends Backbone.View {
 
 	// If you hit `enter`, we're through editing the item.
 	updateOnEnter(e) {
-		if (e.which === TodoView.ENTER_KEY) {
+		if (e.which === ENTER_KEY) {
 			close();
 		}
 	}
@@ -248,7 +248,7 @@ class AppView extends Backbone.View {
 	// If you hit return in the main input field, create new **Todo** model,
 	// persisting it to *localStorage*.
 	createOnEnter(e) {
-		if (e.which !== 13) {
+		if (e.which !== ENTER_KEY || !this.input.val().trim()) {
 			return;
 		}
 
