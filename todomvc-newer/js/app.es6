@@ -1,3 +1,4 @@
+/*jshint esnext:true */
 
 // Todo Model
 // ----------
@@ -11,7 +12,7 @@ class Todo extends Backbone.Model {
 			content: '',
 			done: false
 		};
-	};
+	}
 
 	// Ensure that each todo created has `content`.
 	initialize() {
