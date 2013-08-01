@@ -1,6 +1,7 @@
 /*jshint esnext:true */
 
 let ENTER_KEY = 13;
+let TodoFilter = '';
 
 // Todo Model
 // ----------
@@ -11,28 +12,17 @@ class Todo extends Backbone.Model {
 	// Default attributes for the todo.
 	defaults() {
 		return {
-			content: '',
-			done: false
+			title: '',
+			completed: false
 		};
 	}
 
-	// Ensure that each todo created has `content`.
-	initialize() {
-		if (!this.get('content')) {
-			this.set({ content: this.defaults().content });
-		}
-	}
-
-	// Toggle the `done` state of this todo item.
+	// Toggle the `completed` state of this todo item.
 	toggle() {
-		this.save({ done: !this.get('done') });
+		this.save({
+			completed: !this.get('completed')
+		});
 	}
-
-	// Remove this Todo from *localStorage* and delete its view.
-	clear() {
-		this.destroy();
-	}
-
 }
 
 
@@ -54,13 +44,13 @@ class TodoList extends Backbone.Collection {
 	}
 
 	// Filter down the list of all todo items that are finished.
-	done() {
-		return this.filter((todo) => todo.get('done'));
+	completed() {
+		return this.filter((todo) => todo.get('complete'));
 	}
 
 	// Filter down the list to only todo items that are still not finished.
 	remaining() {
-		return this.without.apply(this, this.done());
+		return this.without.apply(this, this.completed());
 	}
 
 	// We keep the Todos in sequential order, despite being saved by unordered
@@ -106,29 +96,44 @@ class TodoView extends Backbone.View {
 
 		// The DOM events specific to an item.
 		this.events = {
-			'click .check': 'toggleDone',
-			'dblclick label.todo-content': 'edit',
-			'click button.destroy': 'clear',
-			'keypress .todo-input': 'updateOnEnter',
-			'blur .todo-input': 'close'
+			'click .toggle': 'toggleCompleted',
+			'dblclick label': 'edit',
+			'click .destroy': 'clear',
+			'keypress .edit': 'updateOnEnter',
+			'blur .edit': 'close'
 		};
 
 		super(options);
 
 		this.listenTo(this.model, 'change', this.render);
 		this.listenTo(this.model, 'destroy', this.remove);
+		this.listenTo(this.model, 'visible', this.toggleVisible);
 
 	}
 
 	// Re-render the contents of the todo item.
 	render() {
 		this.$el.html(this.template(this.model.toJSON()));
-		this.input = this.$('.todo-input');
+		this.$el.toggleClass('completed', this.model.get('completed'));
+		this.toggleVisible();
+		this.input = this.$('.edit');
 		return this;
 	}
 
-	// Toggle the `'done'` state of the model.
-	toggleDone() {
+	toggleVisible() {
+		this.$el.toggleClass('hidden', this.isHidden());
+	}
+
+	isHidden() {
+		var isCompleted = this.model.get('completed');
+		return (// hidden cases only
+			(!isCompleted && TodoFilter === 'completed') ||
+			(isCompleted && TodoFilter === 'active')
+		);
+	}
+
+	// Toggle the `"completed"` state of the model.
+	toggleCompleted() {
 		this.model.toggle();
 	}
 
@@ -140,7 +145,14 @@ class TodoView extends Backbone.View {
 
 	// Close the `'editing'` mode, saving changes to the todo.
 	close() {
-		this.model.save({ content: this.input.val() });
+		var value = this.input.val();
+
+		if (value) {
+			this.model.save({ title: value });
+		} else {
+			this.clear();
+		}
+
 		this.$el.removeClass('editing');
 	}
 
@@ -166,33 +178,34 @@ class AppView extends Backbone.View {
 
 	constructor () {
 
-
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
 		this.setElement($('#todoapp'), true);
 
+		this.statsTemplate = _.template($('#stats-template').html()),
+
 		// Delegated events for creating new items, and clearing completed ones.
 		this.events = {
 			'keypress #new-todo': 'createOnEnter',
-			'click .todo-clear button': 'clearCompleted',
-			'click .mark-all-done': 'toggleAllComplete'
-		};
+			'click #clear-completed': 'clearCompleted',
+			'click #toggle-all': 'toggleAllComplete'
+		}
 
 
 		// At initialization we bind to the relevant events on the `Todos`
 		// collection, when items are added or changed. Kick things off by
 		// loading any preexisting todos that might be saved in *localStorage*.
 
-		this.input = this.$('#new-todo');
-		this.allCheckbox = this.$('.mark-all-done')[0];
-		this.mainElement = this.$('#main')[0];
-		this.footerElement = this.$('#footer')[0];
-		this.statsTemplate = _.template($('#stats-template').html());
+		this.allCheckbox = this.$('#toggle-all')[0];
+		this.$input = this.$('#new-todo');
+		this.$footer = this.$('#footer');
+		this.$main = this.$('#main');
 
 		this.listenTo(Todos, 'add', this.addOne);
 		this.listenTo(Todos, 'reset', this.addAll);
+		this.listenTo(Todos, 'change:completed', this.filterOne);
+		this.listenTo(Todos, 'filter', this.filterAll);
 		this.listenTo(Todos, 'all', this.render);
-
 
 		Todos.fetch();
 
@@ -202,21 +215,25 @@ class AppView extends Backbone.View {
 	// Re-rendering the App just means refreshing the statistics -- the rest
 	// of the app doesn't change.
 	render() {
-		let done = Todos.done().length;
-		let remaining = Todos.remaining().length;
+		var completed = Todos.completed().length;
+		var remaining = Todos.remaining().length;
 
 		if (Todos.length) {
-			this.mainElement.style.display = 'block';
-			this.footerElement.style.display = 'block';
+			this.$main.show();
+			this.$footer.show();
 
-			this.$('#todo-stats').html(this.statsTemplate({
-				total: Todos.length,
-				done: done,
+			this.$footer.html(this.statsTemplate({
+				completed: completed,
 				remaining: remaining
 			}));
+
+			this.$('#filters li a')
+				.removeClass('selected')
+				.filter('[href="#/' + (TodoFilter || '') + '"]')
+				.addClass('selected');
 		} else {
-			this.mainElement.style.display = 'none';
-			this.footerElement.style.display = 'none';
+			this.$main.hide();
+			this.$footer.hide();
 		}
 
 		this.allCheckbox.checked = !remaining;
@@ -225,52 +242,83 @@ class AppView extends Backbone.View {
 	// Add a single todo item to the list by creating a view for it, and
 	// appending its element to the `<ul>`.
 	addOne(todo) {
-		let view = new TodoView({ model: todo });
-		this.$('#todo-list').append(view.render().el);
+		var view = new TodoView({ model: todo });
+		$('#todo-list').append(view.render().el);
 	}
 
 	// Add all items in the **Todos** collection at once.
 	addAll() {
-		//Todos.each(this.addOne);
 		this.$('#todo-list').html('');
 		Todos.each(this.addOne, this);
+	}
+
+	filterOne(todo) {
+		todo.trigger('visible');
+	}
+
+	filterAll() {
+		Todos.each(this.filterOne, this);
 	}
 
 	// Generate the attributes for a new Todo item.
 	newAttributes() {
 		return {
-			content: this.input.val(),
+			title: this.$input.val().trim(),
 			order: Todos.nextOrder(),
-			done: false
+			completed: false
 		};
 	}
 
 	// If you hit return in the main input field, create new **Todo** model,
 	// persisting it to *localStorage*.
 	createOnEnter(e) {
-		if (e.which !== ENTER_KEY || !this.input.val().trim()) {
+		if (e.which !== ENTER_KEY || !this.$input.val().trim()) {
 			return;
 		}
 
 		Todos.create(this.newAttributes());
-		this.input.val('');
+		this.$input.val('');
 	}
 
-	// Clear all done todo items, destroying their models.
+	// Clear all completed todo items, destroying their models.
 	clearCompleted() {
-		_.each(Todos.done(), (todo) => todo.clear());
+		_.invoke(Todos.completed(), 'destroy');
 		return false;
 	}
 
 	toggleAllComplete() {
-		let done = this.allCheckbox.checked;
-		Todos.each((todo) => todo.save({ 'done': done }));
+
+		var completed = this.allCheckbox.checked;
+		Todos.each((todo) => todo.save({ 'completed': completed }));
 	}
 
 }
+
+
+class Workspace extends Backbone.Router {
+
+	constructor(options){
+		this.routes =  {
+			'*filter': 'setFilter'
+		}
+	}
+
+	setFilter(param) {
+		// Set the current filter to be used
+		TodoFilter = param || '';
+
+		// Trigger a collection filter event, causing hiding/unhiding
+		// of Todo view items
+		Todos.trigger('filter');
+	}
+
+};
+
 
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(() => {
 	// Finally, we kick things off by creating the **App**.
 	new AppView();
+	let TodoRouter = new Workspace();
+	Backbone.history.start();
 });
