@@ -202,8 +202,8 @@ class AppView extends Backbone.View {
 	// Re-rendering the App just means refreshing the statistics -- the rest
 	// of the app doesn't change.
 	render() {
-		var done = Todos.done().length;
-		var remaining = Todos.remaining().length;
+		let done = Todos.done().length;
+		let remaining = Todos.remaining().length;
 
 		if (Todos.length) {
 			this.mainElement.style.display = 'block';
@@ -225,7 +225,7 @@ class AppView extends Backbone.View {
 	// Add a single todo item to the list by creating a view for it, and
 	// appending its element to the `<ul>`.
 	addOne(todo) {
-		var view = new TodoView({ model: todo });
+		let view = new TodoView({ model: todo });
 		this.$('#todo-list').append(view.render().el);
 	}
 
@@ -263,7 +263,7 @@ class AppView extends Backbone.View {
 	}
 
 	toggleAllComplete() {
-		var done = this.allCheckbox.checked;
+		let done = this.allCheckbox.checked;
 		Todos.each((todo) => todo.save({ 'done': done }));
 	}
 
