@@ -45,7 +45,7 @@ class TodoList extends Backbone.Collection {
 
 	// Filter down the list of all todo items that are finished.
 	completed() {
-		return this.filter((todo) => todo.get('complete'));
+		return this.filter((todo) => todo.get('completed'));
 	}
 
 	// Filter down the list to only todo items that are still not finished.
@@ -67,7 +67,6 @@ class TodoList extends Backbone.Collection {
 	comparator(todo) {
 		return todo.get('order');
 	}
-
 }
 
 // Create our global collection of **Todos**.
@@ -79,7 +78,7 @@ var Todos = new TodoList();
 // The DOM element for a todo item...
 class TodoView extends Backbone.View {
 
-	constructor (options) {
+	constructor(options) {
 		//... is a list tag.
 		this.tagName = 'li';
 
@@ -139,8 +138,10 @@ class TodoView extends Backbone.View {
 
 	// Switch this view into `'editing'` mode, displaying the input field.
 	edit() {
+		var value = this.input.val();
+
 		this.$el.addClass('editing');
-		this.input.focus();
+		this.input.val(value).focus();
 	}
 
 	// Close the `'editing'` mode, saving changes to the todo.
@@ -159,15 +160,14 @@ class TodoView extends Backbone.View {
 	// If you hit `enter`, we're through editing the item.
 	updateOnEnter(e) {
 		if (e.which === ENTER_KEY) {
-			close();
+			this.close();
 		}
 	}
 
 	// Remove the item, destroy the model.
 	clear() {
-		this.model.clear();
+		this.model.destroy();
 	}
-
 }
 
 // The Application
@@ -176,7 +176,7 @@ class TodoView extends Backbone.View {
 // Our overall **AppView** is the top-level piece of UI.
 class AppView extends Backbone.View {
 
-	constructor () {
+	constructor() {
 
 		// Instead of generating a new element, bind to the existing skeleton of
 		// the App already present in the HTML.
@@ -189,13 +189,11 @@ class AppView extends Backbone.View {
 			'keypress #new-todo': 'createOnEnter',
 			'click #clear-completed': 'clearCompleted',
 			'click #toggle-all': 'toggleAllComplete'
-		}
-
+		};
 
 		// At initialization we bind to the relevant events on the `Todos`
 		// collection, when items are added or changed. Kick things off by
 		// loading any preexisting todos that might be saved in *localStorage*.
-
 		this.allCheckbox = this.$('#toggle-all')[0];
 		this.$input = this.$('#new-todo');
 		this.$footer = this.$('#footer');
@@ -215,8 +213,8 @@ class AppView extends Backbone.View {
 	// Re-rendering the App just means refreshing the statistics -- the rest
 	// of the app doesn't change.
 	render() {
-		var completed = Todos.completed().length;
-		var remaining = Todos.remaining().length;
+		let completed = Todos.completed().length;
+		let remaining = Todos.remaining().length;
 
 		if (Todos.length) {
 			this.$main.show();
@@ -242,7 +240,7 @@ class AppView extends Backbone.View {
 	// Add a single todo item to the list by creating a view for it, and
 	// appending its element to the `<ul>`.
 	addOne(todo) {
-		var view = new TodoView({ model: todo });
+		let view = new TodoView({ model: todo });
 		$('#todo-list').append(view.render().el);
 	}
 
@@ -287,20 +285,20 @@ class AppView extends Backbone.View {
 	}
 
 	toggleAllComplete() {
-
-		var completed = this.allCheckbox.checked;
+		let completed = this.allCheckbox.checked;
 		Todos.each((todo) => todo.save({ 'completed': completed }));
 	}
-
 }
 
 
 class Workspace extends Backbone.Router {
 
-	constructor(options){
-		this.routes =  {
+	constructor() {
+		this.routes = {
 			'*filter': 'setFilter'
 		}
+
+		this._bindRoutes();
 	}
 
 	setFilter(param) {
@@ -311,14 +309,13 @@ class Workspace extends Backbone.Router {
 		// of Todo view items
 		Todos.trigger('filter');
 	}
-
-};
+}
 
 
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(() => {
 	// Finally, we kick things off by creating the **App**.
 	new AppView();
-	let TodoRouter = new Workspace();
+	new Workspace();
 	Backbone.history.start();
 });
