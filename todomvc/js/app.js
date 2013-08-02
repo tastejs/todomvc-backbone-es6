@@ -2,8 +2,7 @@
 
 const ENTER_KEY = 13;
 const TodoFilter = '';
-
-let { Model, View, Collection, Router, LocalStorage } = Backbone;
+const { Model, View, Collection, Router, LocalStorage } = Backbone;
 
 // Todo Model
 // ----------
