@@ -3,11 +3,13 @@
 const ENTER_KEY = 13;
 const TodoFilter = '';
 
+let { Model, View, Collection, Router, LocalStorage } = Backbone;
+
 // Todo Model
 // ----------
 
 // Our basic **Todo** model has `content`, `order`, and `done` attributes.
-class Todo extends Backbone.Model {
+class Todo extends Model {
 
 	// Default attributes for the todo.
 	defaults() {
@@ -31,7 +33,7 @@ class Todo extends Backbone.Model {
 
 // The collection of todos is backed by *localStorage* instead of a remote
 // server.
-class TodoList extends Backbone.Collection {
+class TodoList extends Collection {
 
 	constructor(options) {
 		super(options);
@@ -40,7 +42,7 @@ class TodoList extends Backbone.Collection {
 		this.model = Todo;
 
 		// Save all of the todo items under the `'todos'` namespace.
-		this.localStorage = new Backbone.LocalStorage('todos-traceur-backbone');
+		this.localStorage = new LocalStorage('todos-traceur-backbone');
 	}
 
 	// Filter down the list of all todo items that are finished.
@@ -76,7 +78,7 @@ var Todos = new TodoList();
 // --------------
 
 // The DOM element for a todo item...
-class TodoView extends Backbone.View {
+class TodoView extends View {
 
 	constructor(options) {
 		//... is a list tag.
@@ -174,7 +176,7 @@ class TodoView extends Backbone.View {
 // ---------------
 
 // Our overall **AppView** is the top-level piece of UI.
-class AppView extends Backbone.View {
+class AppView extends View {
 
 	constructor() {
 
@@ -292,7 +294,7 @@ class AppView extends Backbone.View {
 }
 
 
-class Workspace extends Backbone.Router {
+class Workspace extends Router {
 
 	constructor() {
 		this.routes = {
