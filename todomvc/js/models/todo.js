@@ -2,7 +2,7 @@
 // ----------
 
 // Our basic **Todo** model has `content`, `order`, and `done` attributes.
-class Todo extends Model {
+export class Todo extends Model {
 
 	// Default attributes for the todo.
 	defaults() {
@@ -19,5 +19,3 @@ class Todo extends Model {
 		});
 	}
 }
-
-export { Todo };

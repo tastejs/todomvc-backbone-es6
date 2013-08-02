@@ -1,5 +1,5 @@
 
-class Filters extends Router {
+export class Filters extends Router {
 
 	constructor() {
 		this.routes = {
@@ -19,4 +19,3 @@ class Filters extends Router {
 	}
 }
 
-export { Filters };

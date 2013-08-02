@@ -3,7 +3,7 @@
 // ---------------
 
 // Our overall **AppView** is the top-level piece of UI.
-class AppView extends View {
+export class AppView extends View {
 
 	constructor() {
 
@@ -120,4 +120,4 @@ class AppView extends View {
 	}
 }
 
-export { AppView };
+

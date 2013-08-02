@@ -3,7 +3,7 @@
 
 // The collection of todos is backed by *localStorage* instead of a remote
 // server.
-class TodoList extends Collection {
+export class TodoList extends Collection {
 
 	constructor(options) {
 		super(options);
@@ -41,4 +41,3 @@ class TodoList extends Collection {
 	}
 }
 
-export { TodoList };

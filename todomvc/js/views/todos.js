@@ -3,7 +3,7 @@
 // --------------
 
 // The DOM element for a todo item...
-class TodoView extends View {
+export class TodoView extends View {
 
 	constructor(options) {
 		//... is a list tag.
@@ -97,4 +97,3 @@ class TodoView extends View {
 	}
 }
 
-export { TodoView };
