@@ -34,23 +34,23 @@ class Todo extends Backbone.Model {
 class TodoList extends Backbone.Collection {
 
 	constructor(options) {
+		super(options);
+
 		// Reference to this collection's model.
 		this.model = Todo;
 
 		// Save all of the todo items under the `'todos'` namespace.
 		this.localStorage = new Backbone.LocalStorage('todos-traceur-backbone');
-
-		super(options);
 	}
 
 	// Filter down the list of all todo items that are finished.
 	completed() {
-		return this.filter((todo) => todo.get('completed'));
+		return this.filter(todo => todo.get('completed'));
 	}
 
 	// Filter down the list to only todo items that are still not finished.
 	remaining() {
-		return this.without.apply(this, this.completed());
+		return this.without(...this.completed());
 	}
 
 	// We keep the Todos in sequential order, despite being saved by unordered
@@ -120,10 +120,10 @@ class TodoView extends Backbone.View {
 	}
 
 	toggleVisible() {
-		this.$el.toggleClass('hidden', this.isHidden());
+		this.$el.toggleClass('hidden', this.isHidden);
 	}
 
-	isHidden() {
+	get isHidden() {
 		var isCompleted = this.model.get('completed');
 		return (// hidden cases only
 			(!isCompleted && TodoFilter === 'completed') ||
@@ -146,10 +146,10 @@ class TodoView extends Backbone.View {
 
 	// Close the `'editing'` mode, saving changes to the todo.
 	close() {
-		var value = this.input.val();
+		var title = this.input.val();
 
-		if (value) {
-			this.model.save({ title: value });
+		if (title) {
+			this.model.save({ title });
 		} else {
 			this.clear();
 		}
@@ -220,10 +220,11 @@ class AppView extends Backbone.View {
 			this.$main.show();
 			this.$footer.show();
 
-			this.$footer.html(this.statsTemplate({
-				completed: completed,
-				remaining: remaining
-			}));
+			this.$footer.html(
+				this.statsTemplate({
+					completed, remaining
+				})
+			);
 
 			this.$('#filters li a')
 				.removeClass('selected')
@@ -239,8 +240,8 @@ class AppView extends Backbone.View {
 
 	// Add a single todo item to the list by creating a view for it, and
 	// appending its element to the `<ul>`.
-	addOne(todo) {
-		const view = new TodoView({ model: todo });
+	addOne(model) {
+		const view = new TodoView({ model });
 		$('#todo-list').append(view.render().el);
 	}
 
@@ -286,7 +287,7 @@ class AppView extends Backbone.View {
 
 	toggleAllComplete() {
 		const completed = this.allCheckbox.checked;
-		Todos.each((todo) => todo.save({ 'completed': completed }));
+		Todos.each(todo => todo.save({ completed }));
 	}
 }
 
@@ -295,13 +296,13 @@ class Workspace extends Backbone.Router {
 
 	constructor() {
 		this.routes = {
-			'*filter': 'setFilter'
+			'*filter': 'filter'
 		}
 
 		this._bindRoutes();
 	}
 
-	setFilter(param) {
+	filter(param) {
 		// Set the current filter to be used
 		TodoFilter = param || '';
 
@@ -310,7 +311,6 @@ class Workspace extends Backbone.Router {
 		Todos.trigger('filter');
 	}
 }
-
 
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(() => {
