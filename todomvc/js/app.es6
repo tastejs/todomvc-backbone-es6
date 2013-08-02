@@ -1,7 +1,7 @@
 /*jshint esnext:true */
 
-let ENTER_KEY = 13;
-let TodoFilter = '';
+const ENTER_KEY = 13;
+const TodoFilter = '';
 
 // Todo Model
 // ----------
@@ -213,8 +213,8 @@ class AppView extends Backbone.View {
 	// Re-rendering the App just means refreshing the statistics -- the rest
 	// of the app doesn't change.
 	render() {
-		let completed = Todos.completed().length;
-		let remaining = Todos.remaining().length;
+		const completed = Todos.completed().length;
+		const remaining = Todos.remaining().length;
 
 		if (Todos.length) {
 			this.$main.show();
@@ -240,7 +240,7 @@ class AppView extends Backbone.View {
 	// Add a single todo item to the list by creating a view for it, and
 	// appending its element to the `<ul>`.
 	addOne(todo) {
-		let view = new TodoView({ model: todo });
+		const view = new TodoView({ model: todo });
 		$('#todo-list').append(view.render().el);
 	}
 
@@ -285,7 +285,7 @@ class AppView extends Backbone.View {
 	}
 
 	toggleAllComplete() {
-		let completed = this.allCheckbox.checked;
+		const completed = this.allCheckbox.checked;
 		Todos.each((todo) => todo.save({ 'completed': completed }));
 	}
 }
