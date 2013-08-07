@@ -9,25 +9,6 @@ module TodoApp {
 
 	// Todo Model
 	// ----------
-	// Our basic **Todo** model has `content`, `order`, and `done` attributes.
-	class TodoModel extends Model {
-
-		// Default attributes for the todo.
-		defaults() {
-			return {
-				title: '',
-				completed: false
-			};
-		}
-
-		// Toggle the `completed` state of this todo item.
-		toggle() {
-			this.save({
-				completed: !this.get('completed')
-			});
-		}
-	}
-
 
 	// Our basic **Todo** model has `content`, `order`, and `done` attributes.
 	class Todo extends Model {
@@ -95,6 +76,7 @@ module TodoApp {
 	// Create our global collection of **Todos**.
 	var Todos = new TodoList();
 
+
 	// Todo Item View
 	// --------------
 
@@ -105,9 +87,10 @@ module TodoApp {
 			//... is a list tag.
 			this.tagName = 'li';
 
-			// The TodoView listens for changes to its model, re-rendering. Since there's
-			// a one-to-one correspondence between a **Todo** and a **TodoView** in this
-			// app, we set a direct reference on the model for convenience.
+			// The TodoView listens for changes to its model, re-rendering. Since
+			// there's a one-to-one correspondence between a **Todo** and a
+			// **TodoView** in this app, we set a direct reference on the model for
+			// convenience.
 
 			this.model = Todo;
 
@@ -147,7 +130,7 @@ module TodoApp {
 		}
 
 		get isHidden() {
-			var isCompleted = this.model.get('completed');
+			const isCompleted = this.model.get('completed');
 			return (// hidden cases only
 				(!isCompleted && TodoFilter === 'completed') ||
 				(isCompleted && TodoFilter === 'active')
@@ -161,7 +144,7 @@ module TodoApp {
 
 		// Switch this view into `'editing'` mode, displaying the input field.
 		edit() {
-			var value = this.input.val();
+			const value = this.input.val();
 
 			this.$el.addClass('editing');
 			this.input.val(value).focus();
@@ -169,7 +152,7 @@ module TodoApp {
 
 		// Close the `'editing'` mode, saving changes to the todo.
 		close() {
-			var title = this.input.val();
+			const title = this.input.val();
 
 			if (title) {
 				this.model.save({ title });
@@ -192,6 +175,7 @@ module TodoApp {
 			this.model.destroy();
 		}
 	}
+
 
 	// The Application
 	// ---------------
@@ -334,7 +318,6 @@ module TodoApp {
 			Todos.trigger('filter');
 		}
 	}
-
 };
 
 import { AppView, Filters } from TodoApp;
