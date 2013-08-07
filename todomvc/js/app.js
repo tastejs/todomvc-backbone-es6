@@ -1,6 +1,6 @@
 /*jshint esnext:true */
 
-let { Model, View, Collection, Router, LocalStorage } = Backbone;
+const { Model, View, Collection, Router, LocalStorage } = Backbone;
 
 module TodoApp {
 
