@@ -29,7 +29,7 @@ module TodoApp {
 
 	// In OOP languages, classes represent objects. In JavaScript, we've relied on
 	// prototypal inheritance anytime we've needed a class-like system, but ES6
-	// changes that. It's minimal class syntax makes defining classes much more 
+	// changes that. Its minimal class syntax makes defining classes much more 
 	// terse, but desugars to prototypal inheritance behind the scenes.
 	// We use the extend keyword to implement a new sub-class from the base-class.
 
@@ -82,7 +82,7 @@ module TodoApp {
 		// The fat-arrow (=>) below is shorthand syntax for an anonymous function
 		// which returns a value. It also doesn't require the function keyword
 		// and the parens are option when there's a single parameter being used.
-		// The value of this is bound to it's containing scope, automatically 
+		// The value of this is bound to its containing scope, automatically 
 		// returning the value of the expression that follows the fat arrow.
 
 		completed() {
@@ -361,7 +361,7 @@ module TodoApp {
 // -----------------------
 
 // We import the classes we defined in the TodoApp module using the 'import' 
-// keyword. Typically, you would store this module in it's own separate file
+// keyword. Typically, you would store this module in its own separate file
 // and import it from there instead.
 
 import { AppView, Filters } from TodoApp;
