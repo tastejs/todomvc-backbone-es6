@@ -1,9 +1,6 @@
 /*jshint esnext:true */
 
-
-// Variables are usually function-scoped, so if there are some declared 
-// within a block which is nested, they're available in any part of the function.
-// Constant definitions are block scoped, but their values are read-only.
+// Constant definitions (`const`) are block scoped, but their values are read-only.
 // This means they cannot be re-declared later, which is fine in this case
 // as we won't need to change these Backbone core component definitions.
 
@@ -15,6 +12,9 @@ const { Model, View, Collection, Router, LocalStorage } = Backbone;
 // so on as constants so we can just extend those more literally rather than
 // having to use the more classic Backbone.Model. 
  
+// TodoApp module
+// ---------------
+
 // ES6 modules allow us to define isolated blocks of reusable code without 
 // having to wrap it into an object or closure. Only those functions and
 // variables we've explicitly 'export'ed are available to other consumers
@@ -33,10 +33,10 @@ module TodoApp {
 	// terse, but desugars to prototypal inheritance behind the scenes.
 	// We use the extend keyword to implement a new sub-class from the base-class.
 
-	// Todo Model
-	// ----------
+	// Todo Model class
+	// ----------------
 
-	// Our basic **Todo** model has `content`, `order`, and `done` attributes.
+	// Our basic **Todo** model has `title` and `completed` attributes.
 	class Todo extends Model {
 
 		// Note the omission of the 'function' keyword as in ES6 it is entirely optional
@@ -57,8 +57,8 @@ module TodoApp {
 	}
 
 
-	// Todo Collection
-	// ---------------
+	// TodoList Collection class
+	// -------------------------
 
 	// The collection of todos is backed by *localStorage* instead of a remote
 	// server.
@@ -113,8 +113,8 @@ module TodoApp {
 	// Create our global collection of **Todos**.
 	var Todos = new TodoList();
 
-	// Todo Item View
-	// --------------
+	// Todo Item View class
+	// --------------------
 
 	// The DOM element for a todo item...
 	class TodoView extends View {
@@ -211,8 +211,8 @@ module TodoApp {
 		}
 	}
 
-	// The Application
-	// ---------------
+	// The Application class
+	// ---------------------
 
 	// Our overall **AppView** is the top-level piece of UI.
 	export class AppView extends View {
@@ -332,6 +332,8 @@ module TodoApp {
 		}
 	}
 
+	// The Filters Router class
+	// ------------------------
 
 	export class Filters extends Router {
 
@@ -354,11 +356,19 @@ module TodoApp {
 	}
 }
 
+ 
+// Importing from a module
+// -----------------------
+
 // We import the classes we defined in the TodoApp module using the 'import' 
 // keyword. Typically, you would store this module in it's own separate file
 // and import it from there instead.
 
 import { AppView, Filters } from TodoApp;
+
+ 
+// Document ready
+// ---------------
 
 // Load the application once the DOM is ready, using `jQuery.ready`:
 $(() => {
