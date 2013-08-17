@@ -1,11 +1,37 @@
 /*jshint esnext:true */
 
+
+// Variables are usually function-scoped, so if there are some declared 
+// within a block which is nested, they're available in any part of the function.
+// Constant definitions are block scoped, but their values are read-only.
+// This means they cannot be re-declared later, which is fine in this case
+// as we won't need to change these Backbone core component definitions.
+
 const { Model, View, Collection, Router, LocalStorage } = Backbone;
+
+// We are also taking advantage of a pattern known as "destructuring" here.
+// This allows us to initialize variables in one step without having to create
+// any temporary variables. Destructuring has allowed us to set Model, View and
+// so on as constants so we can just extend those more literally rather than
+// having to use the more classic Backbone.Model. 
+ 
+// ES6 modules allow us to define isolated blocks of reusable code without 
+// having to wrap it into an object or closure. Only those functions and
+// variables we've explicitly 'export'ed are available to other consumers
+// and we can just as easily 'import' functionality from other modules.
+// It's possible to rename exported values, define modules that are inline
+// and even declare defaults for import/export.
 
 module TodoApp {
 
 	const ENTER_KEY = 13;
 	const TodoFilter = '';
+
+	// In OOP languages, classes represent objects. In JavaScript, we've relied on
+	// prototypal inheritance anytime we've needed a class-like system, but ES6
+	// changes that. It's minimal class syntax makes defining classes much more 
+	// terse, but desugars to prototypal inheritance behind the scenes.
+	// We use the extend keyword to implement a new sub-class from the base-class.
 
 	// Todo Model
 	// ----------
@@ -13,6 +39,7 @@ module TodoApp {
 	// Our basic **Todo** model has `content`, `order`, and `done` attributes.
 	class Todo extends Model {
 
+		// Note the omission of the 'function' keyword as in ES6 it is entirely optional
 		// Default attributes for the todo.
 		defaults() {
 			return {
@@ -37,6 +64,10 @@ module TodoApp {
 	// server.
 	class TodoList extends Collection {
 
+		// Specifying a constructor lets us define the class constructor. Use of the
+		// super keyword in your constructor lets you call the constructor of a parent
+		// class so that it can inherit all of its properties.
+
 		constructor(options) {
 			super(options);
 
@@ -48,6 +79,12 @@ module TodoApp {
 		}
 
 		// Filter down the list of all todo items that are finished.
+		// The fat-arrow (=>) below is shorthand syntax for an anonymous function
+		// which returns a value. It also doesn't require the function keyword
+		// and the parens are option when there's a single parameter being used.
+		// The value of this is bound to it's containing scope, automatically 
+		// returning the value of the expression that follows the fat arrow.
+
 		completed() {
 			return this.filter(todo => todo.get('completed'));
 		}
@@ -316,6 +353,10 @@ module TodoApp {
 		}
 	}
 }
+
+// We import the classes we defined in the TodoApp module using the 'import' 
+// keyword. Typically, you would store this module in it's own separate file
+// and import it from there instead.
 
 import { AppView, Filters } from TodoApp;
 
