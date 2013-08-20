@@ -9,11 +9,12 @@
 
 
 // Constant (`const`) definitions are block scoped, but their values are read-only.
-// This means they cannot be re-declared later on. As Backbone's core component 
-// definitions don't need to be modified, we can conbine constants and a pattern
-// known as 'destructuring' to create shorter aliases for creating Models, Views 
-// and other components, rather than having to use the more verbose `Backbone.*` forms we're
-// used to.
+// This means they cannot be re-declared later on. Backbone's core component 
+// definitions don't need to be modified, so we can conbine constants and an ES6 pattern
+// called destructuring assignment to create shorter aliases for Models, Views 
+// and other components. This avoids the need to use the more verbose `Backbone.*`
+// forms we're accustomed to. Destructuring of array and object data uses a syntax 
+// that mirrors the construction of array and object literals.
 
 const { Model, View, Collection, Router, LocalStorage } = Backbone;
  

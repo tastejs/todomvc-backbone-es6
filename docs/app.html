@@ -48,11 +48,12 @@
  Sindre Sorhus, Stephen Sawchuck and Rick Waldron, 
  with help from Domenic Denicola.</code></pre>
 <p>Constant (<code>const</code>) definitions are block scoped, but their values are read-only.
-This means they cannot be re-declared later on. As Backbone&#39;s core component 
-definitions don&#39;t need to be modified, we can conbine constants and a pattern
-known as &#39;destructuring&#39; to create shorter aliases for creating Models, Views 
-and other components, rather than having to use the more verbose <code>Backbone.*</code> forms we&#39;re
-used to.</p>
+This means they cannot be re-declared later on. Backbone&#39;s core component 
+definitions don&#39;t need to be modified, so we can conbine constants and an ES6 pattern
+called destructuring assignment to create shorter aliases for Models, Views 
+and other components. This avoids the need to use the more verbose <code>Backbone.*</code>
+forms we&#39;re accustomed to. Destructuring of array and object data uses a syntax 
+that mirrors the construction of array and object literals.</p>
 
             </div>
             
