@@ -41,9 +41,18 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>Constant definitions (<code>const</code>) are block scoped, but their values are read-only.
-This means they cannot be re-declared later, which is fine in this case
-as we won&#39;t need to change these Backbone core component definitions.</p>
+              <pre><code> Traceur TodoMVC
+ --------------------
+ A re-write of the Backbone TodoMVC app using ECMAScript 6 
+ features. Written by Addy Osmani, Pascal Hartig, 
+ Sindre Sorhus, Stephen Sawchuck and Rick Waldron, 
+ with help from Domenic Denicola.</code></pre>
+<p>Constant (<code>const</code>) definitions are block scoped, but their values are read-only.
+This means they cannot be re-declared later on. As Backbone&#39;s core component 
+definitions don&#39;t need to be modified, we can conbine constants and a pattern
+known as &#39;destructuring&#39; to create shorter aliases for creating Models, Views 
+and other components, rather than having to use the more verbose <code>Backbone.*</code> forms we&#39;re
+used to.</p>
 
             </div>
             
@@ -55,14 +64,10 @@ as we won&#39;t need to change these Backbone core component definitions.</p>
         <li id="section-3">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h2">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>We are also taking advantage of a pattern known as &quot;destructuring&quot; here.
-This allows us to initialize variables in one step without having to create
-any temporary variables. Destructuring has allowed us to set Model, View and
-so on as constants so we can just extend those more literally rather than
-having to use the more classic Backbone.Model. </p>
+              <h2>TodoApp module</h2>
 
             </div>
             
@@ -72,26 +77,13 @@ having to use the more classic Backbone.Model. </p>
         <li id="section-4">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <h2>TodoApp module</h2>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>ES6 modules allow us to define isolated blocks of reusable code without 
 having to wrap it into an object or closure. Only those functions and
-variables we&#39;ve explicitly &#39;export&#39;ed are available to other consumers
-and we can just as easily &#39;import&#39; functionality from other modules.
+variables we explicitly <code>export</code> are available to other consumers
+and we can just as easily <code>import</code> functionality from other modules.
 It&#39;s possible to rename exported values, define modules that are inline
 and even declare defaults for import/export.</p>
 
@@ -105,17 +97,22 @@ and even declare defaults for import/export.</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>In OOP languages, classes represent objects. In JavaScript, we&#39;ve relied on
-prototypal inheritance anytime we&#39;ve needed a class-like system, but ES6
-changes that. Its minimal class syntax makes defining classes much more 
-terse, but desugars to prototypal inheritance behind the scenes.
-We use the extend keyword to implement a new sub-class from the base-class.</p>
+              <p>In JavaScript, we&#39;ve relied on prototypal inheritance anytime we&#39;ve needed 
+a class-like system. This has led to overly verbose code using custom types.
+ES6 changes that by removing the ugly multi-step inheritance patterns we&#39;re 
+used to and introducing a minimal class syntax that makes defining classes a
+lot more terse. </p>
+<p>ES6 classes desugar to prototypal inheritance behind the scenes and the only 
+real change is that there&#39;s less typing required for us. Classes are compact 
+and we can use an &#39;extend&#39; keyword to implement a new sub-class from a 
+base-class. Below, we do this to define a <code>Todo</code> class which <code>extends</code> Backbone&#39;s 
+Model component.</p>
 <h2>Todo Model class</h2>
 
             </div>
@@ -123,11 +120,11 @@ We use the extend keyword to implement a new sub-class from the base-class.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Our basic <strong>Todo</strong> model has <code>title</code> and <code>completed</code> attributes.</p>
 
@@ -138,11 +135,11 @@ We use the extend keyword to implement a new sub-class from the base-class.</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Note the omission of the &#39;function&#39; keyword as in ES6 it is entirely optional
 Default attributes for the todo.</p>
@@ -159,11 +156,11 @@ Default attributes for the todo.</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Toggle the <code>completed</code> state of this todo item.</p>
 
@@ -179,11 +176,11 @@ Default attributes for the todo.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <h2>TodoList Collection class</h2>
 
@@ -192,11 +189,11 @@ Default attributes for the todo.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>The collection of todos is backed by <em>localStorage</em> instead of a remote
 server.</p>
@@ -208,14 +205,14 @@ server.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Specifying a constructor lets us define the class constructor. Use of the
-super keyword in your constructor lets you call the constructor of a parent
+              <p>Specifying a <code>constructor</code> lets us define the class constructor. Use of the
+<code>super</code> keyword in your constructor lets you call the constructor of a parent
 class so that it can inherit all of its properties.</p>
 
             </div>
@@ -226,11 +223,11 @@ class so that it can inherit all of its properties.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Reference to this collection&#39;s model.</p>
 
@@ -241,11 +238,11 @@ class so that it can inherit all of its properties.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Save all of the todo items under the <code>&#39;todos&#39;</code> namespace.</p>
 
@@ -257,14 +254,14 @@ class so that it can inherit all of its properties.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Filter down the list of all todo items that are finished.
-The fat-arrow (=&gt;) below is shorthand syntax for an anonymous function
+The fat-arrow (<code>=&gt;</code>) below is shorthand syntax for an anonymous function
 which returns a value. It also doesn&#39;t require the function keyword
 and the parens are option when there&#39;s a single parameter being used.
 The value of this is bound to its containing scope, automatically 
@@ -279,11 +276,11 @@ returning the value of the expression that follows the fat arrow.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Filter down the list to only todo items that are still not finished.</p>
 
@@ -296,11 +293,11 @@ returning the value of the expression that follows the fat arrow.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>We keep the Todos in sequential order, despite being saved by unordered
 GUID in the database. This generates the next order number for new items.</p>
@@ -318,11 +315,11 @@ GUID in the database. This generates the next order number for new items.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Todos are sorted by their original insertion order.</p>
 
@@ -336,11 +333,11 @@ GUID in the database. This generates the next order number for new items.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Create our global collection of <strong>Todos</strong>.</p>
 
@@ -351,11 +348,11 @@ GUID in the database. This generates the next order number for new items.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <h2>Todo Item View class</h2>
 
@@ -364,11 +361,11 @@ GUID in the database. This generates the next order number for new items.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>The DOM element for a todo item...</p>
 
@@ -381,11 +378,11 @@ GUID in the database. This generates the next order number for new items.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>... is a list tag.</p>
 
@@ -396,11 +393,11 @@ GUID in the database. This generates the next order number for new items.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>The TodoView listens for changes to its model, re-rendering. Since there&#39;s
 a one-to-one correspondence between a <strong>Todo</strong> and a <strong>TodoView</strong> in this
@@ -413,11 +410,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Cache the template function for a single item.</p>
 
@@ -430,11 +427,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>The DOM events specific to an item.</p>
 
@@ -459,11 +456,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Re-render the contents of the todo item.</p>
 
@@ -492,11 +489,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Toggle the <code>&quot;completed&quot;</code> state of the model.</p>
 
@@ -509,11 +506,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Switch this view into <code>&#39;editing&#39;</code> mode, displaying the input field.</p>
 
@@ -529,11 +526,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Close the <code>&#39;editing&#39;</code> mode, saving changes to the todo.</p>
 
@@ -554,11 +551,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>If you hit <code>enter</code>, we&#39;re through editing the item.</p>
 
@@ -573,11 +570,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Remove the item, destroy the model.</p>
 
@@ -591,11 +588,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2>The Application class</h2>
 
@@ -604,11 +601,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Our overall <strong>AppView</strong> is the top-level piece of UI.</p>
 
@@ -621,11 +618,11 @@ app, we set a direct reference on the model for convenience.</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Instead of generating a new element, bind to the existing skeleton of
 the App already present in the HTML.</p>
@@ -639,11 +636,11 @@ the App already present in the HTML.</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Delegated events for creating new items, and clearing completed ones.</p>
 
@@ -658,11 +655,11 @@ the App already present in the HTML.</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>At initialization we bind to the relevant events on the <code>Todos</code>
 collection, when items are added or changed. Kick things off by
@@ -689,11 +686,11 @@ loading any preexisting todos that might be saved in <em>localStorage</em>.</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Re-rendering the App just means refreshing the statistics -- the rest
 of the app doesn&#39;t change.</p>
@@ -729,11 +726,11 @@ of the app doesn&#39;t change.</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Add a single todo item to the list by creating a view for it, and
 appending its element to the <code>&lt;ul&gt;</code>.</p>
@@ -748,11 +745,11 @@ appending its element to the <code>&lt;ul&gt;</code>.</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Add all items in the <strong>Todos</strong> collection at once.</p>
 
@@ -774,11 +771,11 @@ appending its element to the <code>&lt;ul&gt;</code>.</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Generate the attributes for a new Todo item.</p>
 
@@ -795,11 +792,11 @@ appending its element to the <code>&lt;ul&gt;</code>.</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>If you hit return in the main input field, create new <strong>Todo</strong> model,
 persisting it to <em>localStorage</em>.</p>
@@ -818,11 +815,11 @@ persisting it to <em>localStorage</em>.</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Clear all completed todo items, destroying their models.</p>
 
@@ -842,11 +839,11 @@ persisting it to <em>localStorage</em>.</p>
         </li>
         
         
-        <li id="section-43">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <h2>The Filters Router class</h2>
 
@@ -855,11 +852,11 @@ persisting it to <em>localStorage</em>.</p>
         </li>
         
         
-        <li id="section-44">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               
             </div>
@@ -879,11 +876,11 @@ persisting it to <em>localStorage</em>.</p>
         </li>
         
         
-        <li id="section-45">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Set the current filter to be used</p>
 
@@ -894,11 +891,11 @@ persisting it to <em>localStorage</em>.</p>
         </li>
         
         
-        <li id="section-46">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Trigger a collection filter event, causing hiding/unhiding
 of Todo view items</p>
@@ -913,11 +910,11 @@ of Todo view items</p>
         </li>
         
         
-        <li id="section-47">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-47">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <h2>Importing from a module</h2>
 
@@ -926,15 +923,16 @@ of Todo view items</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
-              <p>We import the classes we defined in the TodoApp module using the &#39;import&#39; 
+              <p>We import the classes we defined in the TodoApp module using the <code>import</code> 
 keyword. Typically, you would store this module in its own separate file
-and import it from there instead.</p>
+and import it from there instead, but we&#39;re keeping everything in a single
+script here for demonstration purposes.</p>
 
             </div>
             
@@ -943,11 +941,11 @@ and import it from there instead.</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-48">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <h2>Document ready</h2>
 
@@ -956,11 +954,11 @@ and import it from there instead.</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <p>Load the application once the DOM is ready, using <code>jQuery.ready</code>:</p>
 
@@ -971,11 +969,11 @@ and import it from there instead.</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>Finally, we kick things off by creating the <strong>App</strong>.</p>
 
