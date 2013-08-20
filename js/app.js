@@ -33,6 +33,9 @@ module TodoApp {
 	const ENTER_KEY = 13;
 	const TodoFilter = '';
 
+	// Todo Model class
+	// ----------------
+
 	// In JavaScript, we've relied on prototypal inheritance anytime we've needed 
 	// a class-like system. This has led to overly verbose code using custom types.
 	// ES6 changes that by removing the ugly multi-step inheritance patterns we're 
@@ -44,9 +47,6 @@ module TodoApp {
 	// and we can use an 'extend' keyword to implement a new sub-class from a 
 	// base-class. Below, we do this to define a `Todo` class which `extends` Backbone's 
 	// Model component.
-
-	// Todo Model class
-	// ----------------
 
 	// Our basic **Todo** model has `title` and `completed` attributes.
 	class Todo extends Model {
