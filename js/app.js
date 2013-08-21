@@ -50,7 +50,9 @@ module TodoApp {
 	// Our basic **Todo** model has `title` and `completed` attributes.
 	class Todo extends Model {
 
-		// Note the omission of the 'function' keyword as in ES6 it is entirely optional
+		// Notice our use of the new "method definition" syntax for declaring
+		// methods for our class; we don't need the function keyword. This works
+		// in object literals, too.
 		// Default attributes for the todo.
 		defaults() {
 			return {
