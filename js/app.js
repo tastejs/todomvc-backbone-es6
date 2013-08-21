@@ -103,6 +103,13 @@ module TodoApp {
 
 		// Filter down the list to only todo items that are still not finished.
 		remaining() {
+			// The ES6 spread operator reduces runtime boilerplate code by allowing
+			// an expression to be expanded where multiple arguments or elements are
+			// normally expected. It can appear in function calls or array literals.
+			// The three dot syntax below is to indicate a variable number of arguments
+			// and helps us avoid hacky use of `apply` for spreading. The old way of 
+			// doing things was `return this.without.apply(this, this.completed());`
+			// but the new way is significantly shorter.
 			return this.without(...this.completed());
 		}
 
