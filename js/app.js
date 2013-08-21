@@ -183,6 +183,15 @@ module TodoApp {
 			this.$el.toggleClass('hidden', this.isHidden);
 		}
 
+		// `isHidden()` is using something we call a property getter.
+		// Although technically part of ECMAScript 5.1, getters and
+		// setters allow us to write and read properties that lazily compute
+		// their values. Properties can process values assigned in a
+		// post-process step, validating and transforming during assignment.
+		// In general this means using `set` and `get` to bind a property
+		// of an object to a function which is invoked when the property is
+		// being set and looked up. For more examples on getters and setters 
+		// see http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html.
 		get isHidden() {
 			var isCompleted = this.model.get('completed');
 			return (// hidden cases only
