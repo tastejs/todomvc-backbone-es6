@@ -911,9 +911,7 @@ persisting it to <em>localStorage</em>.</p>
 			}
 
 			<span class="keyword">this</span>._bindRoutes();
-		}
-
-		filter(param) {</pre></div></div>
+		}</pre></div></div>
             
         </li>
         
@@ -924,11 +922,18 @@ persisting it to <em>localStorage</em>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
-              <p>Set the current filter to be used</p>
+              <p><code>param</code> in the <code>filter()</code> function is using ES6&#39;s support for default
+parameter values. Most serious languages support the notion of a default 
+argument for functional parameters but JavaScript hasn&#39;t until now. 
+They basically avoid the need to specify your own defaults within the body of a 
+function. We&#39;ve worked around this by performing logical OR (<code>||</code>) checks 
+against argument values to default if they&#39;re empty/null/undefined or of 
+the incorrect type. Native default parameter values provide a much cleaner 
+solution to this problem.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>			TodoFilter = param || <span class="string">''</span>;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>		filter(param = <span class="string">''</span>) {</pre></div></div>
             
         </li>
         
@@ -938,6 +943,21 @@ persisting it to <em>localStorage</em>.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>Set the current filter to be used</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>			TodoFilter = param;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p>Trigger a collection filter event, causing hiding/unhiding
 of Todo view items</p>
@@ -952,11 +972,11 @@ of Todo view items</p>
         </li>
         
         
-        <li id="section-48">
+        <li id="section-49">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-48">&#182;</a>
+                <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
               <h2>Importing from a module</h2>
 
@@ -965,11 +985,11 @@ of Todo view items</p>
         </li>
         
         
-        <li id="section-49">
+        <li id="section-50">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-49">&#182;</a>
+                <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
               <p>We import the classes we defined in the TodoApp module using the <code>import</code> 
 keyword. Typically, you would store this module in its own separate file
@@ -983,11 +1003,11 @@ script here for demonstration purposes.</p>
         </li>
         
         
-        <li id="section-50">
+        <li id="section-51">
             <div class="annotation">
               
               <div class="pilwrap for-h2">
-                <a class="pilcrow" href="#section-50">&#182;</a>
+                <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
               <h2>Document ready</h2>
 
@@ -996,11 +1016,11 @@ script here for demonstration purposes.</p>
         </li>
         
         
-        <li id="section-51">
+        <li id="section-52">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-51">&#182;</a>
+                <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>Load the application once the DOM is ready, using <code>jQuery.ready</code> shortened
 down using arrow functions. In their expression form arrows are primarily 
@@ -1017,11 +1037,11 @@ For example, your average grocery item cost based on a <code>groceryList</code> 
         </li>
         
         
-        <li id="section-52">
+        <li id="section-53">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-52">&#182;</a>
+                <a class="pilcrow" href="#section-53">&#182;</a>
               </div>
               <p>Finally, we kick things off by creating the <strong>App</strong>.</p>
 
@@ -1035,11 +1055,11 @@ For example, your average grocery item cost based on a <code>groceryList</code> 
         </li>
         
         
-        <li id="section-53">
+        <li id="section-54">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-53">&#182;</a>
+                <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
               <p>Note that the () here may go away soon according to recent es-discuss
 threads <a href="http://esdiscuss.org/topic/more-concise-arrow-functions">http://esdiscuss.org/topic/more-concise-arrow-functions</a>.</p>

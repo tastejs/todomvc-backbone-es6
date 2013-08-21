@@ -373,9 +373,17 @@ module TodoApp {
 			this._bindRoutes();
 		}
 
-		filter(param) {
+		// `param` in the `filter()` function is using ES6's support for default
+		// parameter values. Most serious languages support the notion of a default 
+		// argument for functional parameters but JavaScript hasn't until now. 
+		// They basically avoid the need to specify your own defaults within the body of a 
+		// function. We've worked around this by performing logical OR (`||`) checks 
+		// against argument values to default if they're empty/null/undefined or of 
+		// the incorrect type. Native default parameter values provide a much cleaner 
+		// solution to this problem.
+		filter(param = '') {
 			// Set the current filter to be used
-			TodoFilter = param || '';
+			TodoFilter = param;
 
 			// Trigger a collection filter event, causing hiding/unhiding
 			// of Todo view items
