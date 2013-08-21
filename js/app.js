@@ -2,25 +2,25 @@
 
 //      Traceur TodoMVC
 //      --------------------
-//      A re-write of the Backbone TodoMVC app using ECMAScript 6 
-//      features. Written by Addy Osmani, Pascal Hartig, 
-//      Sindre Sorhus, Stephen Sawchuck and Rick Waldron, 
+//      A re-write of the Backbone TodoMVC app using ECMAScript 6
+//      features. Written by Addy Osmani, Pascal Hartig,
+//      Sindre Sorhus, Stephen Sawchuck and Rick Waldron,
 //      with help from Domenic Denicola.
 
 
 // Constant (`const`) definitions are block scoped, but their values are read-only.
-// This means they cannot be re-declared later on. As Backbone's core component 
+// This means they cannot be re-declared later on. As Backbone's core component
 // definitions don't need to be modified, we can conbine constants and a pattern
-// known as 'destructuring' to create shorter aliases for creating Models, Views 
+// known as 'destructuring' to create shorter aliases for creating Models, Views
 // and other components, rather than having to use the more verbose `Backbone.*` forms we're
 // used to.
 
 const { Model, View, Collection, Router, LocalStorage } = Backbone;
- 
+
 // TodoApp module
 // ---------------
 
-// ES6 modules allow us to define isolated blocks of reusable code without 
+// ES6 modules allow us to define isolated blocks of reusable code without
 // having to wrap it into an object or closure. Only those functions and
 // variables we explicitly `export` are available to other consumers
 // and we can just as easily `import` functionality from other modules.
@@ -32,16 +32,16 @@ module TodoApp {
 	const ENTER_KEY = 13;
 	const TodoFilter = '';
 
-	// In JavaScript, we've relied on prototypal inheritance anytime we've needed 
+	// In JavaScript, we've relied on prototypal inheritance anytime we've needed
 	// a class-like system. This has led to overly verbose code using custom types.
-	// ES6 changes that by removing the ugly multi-step inheritance patterns we're 
+	// ES6 changes that by removing the ugly multi-step inheritance patterns we're
 	// used to and introducing a minimal class syntax that makes defining classes a
-	// lot more terse. 
+	// lot more terse.
 
-	// ES6 classes desugar to prototypal inheritance behind the scenes and the only 
-	// real change is that there's less typing required for us. Classes are compact 
+	// ES6 classes desugar to prototypal inheritance behind the scenes and the only
+	// real change is that there's less typing required for us. Classes are compact
 	// and we can use an 'extends' keyword to implement a new sub-class from a
-	// base-class. Below, we do this to define a `Todo` class which `extends` Backbone's 
+	// base-class. Below, we do this to define a `Todo` class which `extends` Backbone's
 	// Model component.
 
 	// Todo Model class
@@ -95,7 +95,7 @@ module TodoApp {
 		// The fat-arrow (`=>`) below is shorthand syntax for an anonymous function
 		// which returns a value. It also doesn't require the function keyword
 		// and the parens are option when there's a single parameter being used.
-		// The value of this is bound to its containing scope, automatically 
+		// The value of this is bound to its containing scope, automatically
 		// returning the value of the expression that follows the fat arrow.
 
 		completed() {
@@ -369,11 +369,11 @@ module TodoApp {
 	}
 }
 
- 
+
 // Importing from a module
 // -----------------------
 
-// We import the classes we defined in the TodoApp module using the `import` 
+// We import the classes we defined in the TodoApp module using the `import`
 // keyword. Typically, you would store this module in its own separate file
 // and import it from there instead, but we're keeping everything in a single
 // script here for demonstration purposes.
