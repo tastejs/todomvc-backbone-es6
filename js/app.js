@@ -28,6 +28,10 @@ const { Model, View, Collection, Router, LocalStorage } = Backbone;
 // It's possible to rename exported values, define modules that are inline
 // and even declare defaults for import/export.
 
+// Note: Modules now use string IDs instead of identifiers. Traceur doesn't yet
+// support this form, but you would normally be accepted to write the below as
+// `module "TodoApp"` or `module "todo-app"`.
+
 module TodoApp {
 
 	const ENTER_KEY = 13;
