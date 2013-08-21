@@ -2,10 +2,13 @@
 
 //      Traceur TodoMVC
 //      --------------------
-//      A re-write of the Backbone TodoMVC app using ECMAScript 6 
-//      features. Written by Addy Osmani, Pascal Hartig, 
-//      Sindre Sorhus, Stephen Sawchuck and Rick Waldron, 
-//      with help from Domenic Denicola.
+//      A re-write of the Backbone TodoMVC app using 
+//      ECMAScript 6 features. Written by Addy Osmani, 
+//      Pascal Hartig, Sindre Sorhus, Stephen Sawchuck 
+//      and Rick Waldron, with help from Domenic Denicola.
+//
+//      For the original ES5 version of this app, take a 
+//      look at the TodoMVC repo: http://goo.gl/8opExB.
 
 
 // Constant (`const`) definitions are block scoped, but their values are read-only.
