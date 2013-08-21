@@ -123,8 +123,8 @@ module TodoApp {
 		}
 	}
 
-	// Create our global collection of **Todos**.
-	var Todos = new TodoList();
+	// Create our module-local collection of **Todos**.
+	const Todos = new TodoList();
 
 	// Todo Item View class
 	// --------------------
