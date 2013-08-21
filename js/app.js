@@ -40,7 +40,7 @@ module TodoApp {
 
 	// ES6 classes desugar to prototypal inheritance behind the scenes and the only 
 	// real change is that there's less typing required for us. Classes are compact 
-	// and we can use an 'extend' keyword to implement a new sub-class from a 
+	// and we can use an 'extends' keyword to implement a new sub-class from a
 	// base-class. Below, we do this to define a `Todo` class which `extends` Backbone's 
 	// Model component.
 
