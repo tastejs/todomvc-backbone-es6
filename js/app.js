@@ -178,7 +178,7 @@ module TodoApp {
 		}
 
 		get isHidden() {
-			var isCompleted = this.model.get('completed');
+			const isCompleted = this.model.get('completed');
 			return (// hidden cases only
 				(!isCompleted && TodoFilter === 'completed') ||
 				(isCompleted && TodoFilter === 'active')
@@ -192,7 +192,7 @@ module TodoApp {
 
 		// Switch this view into `'editing'` mode, displaying the input field.
 		edit() {
-			var value = this.input.val();
+			const value = this.input.val();
 
 			this.$el.addClass('editing');
 			this.input.val(value).focus();
@@ -200,7 +200,7 @@ module TodoApp {
 
 		// Close the `'editing'` mode, saving changes to the todo.
 		close() {
-			var title = this.input.val();
+			const title = this.input.val();
 
 			if (title) {
 				this.model.save({ title });
