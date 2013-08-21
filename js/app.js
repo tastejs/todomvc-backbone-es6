@@ -116,7 +116,8 @@ module TodoApp {
 			// The three dot syntax below is to indicate a variable number of arguments
 			// and helps us avoid hacky use of `apply` for spreading. The old way of 
 			// doing things was `return this.without.apply(this, this.completed());`
-			// but the new way is significantly shorter.
+			// but the new way is significantly shorter and doesn't require repeating 
+			// the object on which the method is called (`this` in our case).
 			return this.without(...this.completed());
 		}
 
@@ -387,7 +388,8 @@ module TodoApp {
 		// function. We've worked around this by performing logical OR (`||`) checks 
 		// against argument values to default if they're empty/null/undefined or of 
 		// the incorrect type. Native default parameter values provide a much cleaner 
-		// solution to this problem.
+		// solution to this problem. Notably they are only triggered by `undefined`, and 
+		// not by any falsy value.
 		filter(param = '') {
 			// Set the current filter to be used
 			TodoFilter = param;
@@ -414,13 +416,7 @@ import { AppView, Filters } from TodoApp;
 // ---------------
 
 // Load the application once the DOM is ready, using `jQuery.ready` shortened
-// down using arrow functions. In their expression form arrows are primarily 
-// useful for when you need to return a value without the need for the `function` 
-// or `return` keywords. They can also be useful for when you don't need to return 
-// anything and simply wish to execute single or multiple statements.
-// For example, your average grocery item cost based on a `groceryList` array could be: 
-// `groceryList.map(e => e.price).reduce((a, b) => a + b)) / groceryList.length;`
-
+// down using arrow function (statement form). 
 $(() => {
 	// Finally, we kick things off by creating the **App**.
 	new AppView();

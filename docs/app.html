@@ -310,7 +310,8 @@ normally expected. It can appear in function calls or array literals.
 The three dot syntax below is to indicate a variable number of arguments
 and helps us avoid hacky use of <code>apply</code> for spreading. The old way of 
 doing things was <code>return this.without.apply(this, this.completed());</code>
-but the new way is significantly shorter.</p>
+but the new way is significantly shorter and doesn&#39;t require repeating 
+the object on which the method is called (<code>this</code> in our case).</p>
 
             </div>
             
@@ -935,7 +936,8 @@ They basically avoid the need to specify your own defaults within the body of a
 function. We&#39;ve worked around this by performing logical OR (<code>||</code>) checks 
 against argument values to default if they&#39;re empty/null/undefined or of 
 the incorrect type. Native default parameter values provide a much cleaner 
-solution to this problem.</p>
+solution to this problem. Notably they are only triggered by <code>undefined</code>, and 
+not by any falsy value.</p>
 
             </div>
             
@@ -1029,12 +1031,7 @@ script here for demonstration purposes.</p>
                 <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
               <p>Load the application once the DOM is ready, using <code>jQuery.ready</code> shortened
-down using arrow functions. In their expression form arrows are primarily 
-useful for when you need to return a value without the need for the <code>function</code> 
-or <code>return</code> keywords. They can also be useful for when you don&#39;t need to return 
-anything and simply wish to execute single or multiple statements.
-For example, your average grocery item cost based on a <code>groceryList</code> array could be: 
-<code>groceryList.map(e =&gt; e.price).reduce((a, b) =&gt; a + b)) / groceryList.length;</code></p>
+down using arrow function (statement form). </p>
 
             </div>
             
