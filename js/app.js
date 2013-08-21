@@ -4,8 +4,8 @@
 //      --------------------
 //      A re-write of the Backbone TodoMVC app using 
 //      ECMAScript 6 features. Written by Addy Osmani, 
-//      Pascal Hartig, Sindre Sorhus, Stephen Sawchuck 
-//      and Rick Waldron, with help from Domenic Denicola.
+//      Pascal Hartig, Sindre Sorhus, Stephen Sawchuck, 
+//      Rick Waldron and Domenic Denicola.
 //
 //      For the original ES5 version of this app, take a 
 //      look at the TodoMVC repo: http://goo.gl/8opExB.
@@ -98,12 +98,19 @@ module TodoApp {
 		}
 
 		// Filter down the list of all todo items that are finished.
-		// The fat-arrow (`=>`) below is shorthand syntax for an anonymous function
-		// which returns a value. It also doesn't require the function keyword
-		// and the parens are option when there's a single parameter being used.
-		// The value of this is bound to its containing scope, automatically 
-		// returning the value of the expression that follows the fat arrow.
 
+		// The arrow (`=>`) below is shorthand syntax for an anonymous 
+		// function. It doesn't require the `function` keyword and the 
+		// parens are option when there's a single parameter being used. 
+		// The value of `this` is bound to its containing scope, and when 
+		// an expression follows the arrow - like in this case - the arrow 
+		// function automatically returns that expression's value, so you 
+		// don't need `return`. Finally, arrow functions are more lightweight 
+		// than normal functions, reflecting how they're expected to be used: 
+		// they don't have a prototype and can't act as constructors. 
+		// Because of how they inherit `this` from the containing scope, 
+		// the meaning of `this` inside of them can't be changed with `call` 
+		// or `apply`.
 		completed() {
 			return this.filter(todo => todo.get('completed'));
 		}
@@ -415,8 +422,13 @@ import { AppView, Filters } from TodoApp;
 // Document ready
 // ---------------
 
-// Load the application once the DOM is ready, using `jQuery.ready` shortened
-// down using arrow function (statement form). 
+// Load the application once the DOM is ready, using `jQuery.ready` 
+// `() => { ... }` which you'll see below is the statement form of 
+// the arrow function syntax. Practically speaking, it is lightweight
+// sugar for `function () { ... }.bind(this)`. Apart from containing 
+// statements instead of an automatically-returned expression, it has
+// the same properties as the expression-form arrow functions we talked 
+// about above.
 $(() => {
 	// Finally, we kick things off by creating the **App**.
 	new AppView();

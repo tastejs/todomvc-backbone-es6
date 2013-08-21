@@ -45,8 +45,8 @@
  --------------------
  A re-write of the Backbone TodoMVC app using 
  ECMAScript 6 features. Written by Addy Osmani, 
- Pascal Hartig, Sindre Sorhus, Stephen Sawchuck 
- and Rick Waldron, with help from Domenic Denicola.
+ Pascal Hartig, Sindre Sorhus, Stephen Sawchuck, 
+ Rick Waldron and Domenic Denicola.
 
  For the original ES5 version of this app, take a 
  look at the TodoMVC repo: http://goo.gl/8opExB.</code></pre>
@@ -267,12 +267,19 @@ class so that it can inherit all of its properties.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>Filter down the list of all todo items that are finished.
-The fat-arrow (<code>=&gt;</code>) below is shorthand syntax for an anonymous function
-which returns a value. It also doesn&#39;t require the function keyword
-and the parens are option when there&#39;s a single parameter being used.
-The value of this is bound to its containing scope, automatically 
-returning the value of the expression that follows the fat arrow.</p>
+              <p>Filter down the list of all todo items that are finished.</p>
+<p>The arrow (<code>=&gt;</code>) below is shorthand syntax for an anonymous 
+function. It doesn&#39;t require the <code>function</code> keyword and the 
+parens are option when there&#39;s a single parameter being used. 
+The value of <code>this</code> is bound to its containing scope, and when 
+an expression follows the arrow - like in this case - the arrow 
+function automatically returns that expression&#39;s value, so you 
+don&#39;t need <code>return</code>. Finally, arrow functions are more lightweight 
+than normal functions, reflecting how they&#39;re expected to be used: 
+they don&#39;t have a prototype and can&#39;t act as constructors. 
+Because of how they inherit <code>this</code> from the containing scope, 
+the meaning of <code>this</code> inside of them can&#39;t be changed with <code>call</code> 
+or <code>apply</code>.</p>
 
             </div>
             
@@ -1030,8 +1037,13 @@ script here for demonstration purposes.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
-              <p>Load the application once the DOM is ready, using <code>jQuery.ready</code> shortened
-down using arrow function (statement form). </p>
+              <p>Load the application once the DOM is ready, using <code>jQuery.ready</code> 
+<code>() =&gt; { ... }</code> which you&#39;ll see below is the statement form of 
+the arrow function syntax. Practically speaking, it is lightweight
+sugar for <code>function () { ... }.bind(this)</code>. Apart from containing 
+statements instead of an automatically-returned expression, it has
+the same properties as the expression-form arrow functions we talked 
+about above.</p>
 
             </div>
             
