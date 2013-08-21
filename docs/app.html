@@ -1002,7 +1002,13 @@ script here for demonstration purposes.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-51">&#182;</a>
               </div>
-              <p>Load the application once the DOM is ready, using <code>jQuery.ready</code>:</p>
+              <p>Load the application once the DOM is ready, using <code>jQuery.ready</code> shortened
+down using arrow functions. In their expression form arrows are primarily 
+useful for when you need to return a value without the need for the <code>function</code> 
+or <code>return</code> keywords. They can also be useful for when you don&#39;t need to return 
+anything and simply wish to execute single or multiple statements.
+For example, your average grocery item cost based on a <code>groceryList</code> array could be: 
+<code>groceryList.map(e =&gt; e.price).reduce((a, b) =&gt; a + b)) / groceryList.length;</code></p>
 
             </div>
             
@@ -1025,6 +1031,20 @@ script here for demonstration purposes.</p>
 	<span class="keyword">new</span> Filters();
 	Backbone.history.start();
 });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>Note that the () here may go away soon according to recent es-discuss
+threads <a href="http://esdiscuss.org/topic/more-concise-arrow-functions">http://esdiscuss.org/topic/more-concise-arrow-functions</a>.</p>
+
+            </div>
             
         </li>
         

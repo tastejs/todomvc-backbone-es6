@@ -398,10 +398,20 @@ import { AppView, Filters } from TodoApp;
 // Document ready
 // ---------------
 
-// Load the application once the DOM is ready, using `jQuery.ready`:
+// Load the application once the DOM is ready, using `jQuery.ready` shortened
+// down using arrow functions. In their expression form arrows are primarily 
+// useful for when you need to return a value without the need for the `function` 
+// or `return` keywords. They can also be useful for when you don't need to return 
+// anything and simply wish to execute single or multiple statements.
+// For example, your average grocery item cost based on a `groceryList` array could be: 
+// `groceryList.map(e => e.price).reduce((a, b) => a + b)) / groceryList.length;`
+
 $(() => {
 	// Finally, we kick things off by creating the **App**.
 	new AppView();
 	new Filters();
 	Backbone.history.start();
 });
+
+// Note that the () here may go away soon according to recent es-discuss
+// threads http://esdiscuss.org/topic/more-concise-arrow-functions.
