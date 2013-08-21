@@ -1,15 +1,17 @@
 /*jshint esnext:true */
 
-//      Traceur TodoMVC
-//      --------------------
-//      A re-write of the Backbone TodoMVC app using 
-//      ECMAScript 6 features. Written by Addy Osmani, 
-//      Pascal Hartig, Sindre Sorhus, Stephen Sawchuck, 
-//      Rick Waldron and Domenic Denicola.
-//
-//      For the original ES5 version of this app, take a 
-//      look at the TodoMVC repo: http://goo.gl/8opExB.
+// Traceur TodoMVC
+// --------------------
+// This is a re-write of the Backbone [TodoMVC](http://todomvc.com) app using ECMAScript 6 features. 
+// It was authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuck, 
+// Rick Waldron and Domenic Denicola.
 
+// You can [run](http://goo.gl/tdMZKy) the completed app, 
+// [watch](https://github.com/addyosmani/traceur-todomvc) the project repository
+// or look at the original [ES5 implementation](http://goo.gl/8opExB).
+
+// Begin your ES6 adventure here
+// --------------------------------
 
 // Constant (`const`) definitions are block scoped, but their values are read-only.
 // This means they cannot be re-declared later on. Backbone's core component 
@@ -205,8 +207,8 @@ module TodoApp {
 		// post-process step, validating and transforming during assignment.
 		// In general this means using `set` and `get` to bind a property
 		// of an object to a function which is invoked when the property is
-		// being set and looked up. For more examples on getters and setters 
-		// see http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html.
+		// being set and looked up. [Read more](http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html) 
+		// on getters and setters.
 		get isHidden() {
 			var isCompleted = this.model.get('completed');
 			return (// hidden cases only
@@ -436,5 +438,6 @@ $(() => {
 	Backbone.history.start();
 });
 
-// Note that the () here may go away soon according to recent es-discuss
-// threads http://esdiscuss.org/topic/more-concise-arrow-functions.
+// Note that the `()` here may go away soon according to recent 
+// [es-discuss](http://esdiscuss.org/topic/more-concise-arrow-functions)
+// threads.
