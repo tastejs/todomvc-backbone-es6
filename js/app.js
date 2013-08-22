@@ -17,7 +17,7 @@
 
 // Constant (`const`) definitions are block scoped, but their values are read-only.
 // This means they cannot be re-declared later on. Backbone's core component
-// definitions don't need to be modified, so we can conbine constants and an ES6 pattern
+// definitions don't need to be modified, so we can combine constants and an ES6 pattern
 // called destructuring assignment to create shorter aliases for Models, Views
 // and other components. This avoids the need to use the more verbose `Backbone.*`
 // forms we're accustomed to. Destructuring of array and object data uses a syntax
@@ -105,7 +105,7 @@ module TodoApp {
 
 		// The arrow (`=>`) below is shorthand syntax for an anonymous
 		// function. It doesn't require the `function` keyword and the
-		// parens are option when there's a single parameter being used.
+		// parens are optional when there's a single parameter being used.
 		// The value of `this` is bound to its containing scope, and when
 		// an expression follows the arrow - like in this case - the arrow
 		// function automatically returns that expression's value, so you

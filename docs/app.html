@@ -54,12 +54,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>This is a re-write of the Backbone <a href="http://todomvc.com">TodoMVC</a> app using 
-ECMAScript 6 features. It&#39;s made possible using 
-<a href="https://github.com/google/traceur-compiler">Traceur</a> compiler and was 
-authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuck, 
+              <p>This is a re-write of the Backbone <a href="http://todomvc.com">TodoMVC</a> app using
+ECMAScript 6 features. It&#39;s made possible using
+<a href="https://github.com/google/traceur-compiler">Traceur</a> compiler and was
+authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuck,
 Rick Waldron and Domenic Denicola.</p>
-<p>You can <a href="http://goo.gl/tdMZKy">run</a> the completed app, 
+<p>You can <a href="http://goo.gl/tdMZKy">run</a> the completed app,
 <a href="https://github.com/addyosmani/traceur-todomvc">watch</a> the project repository
 or look at the original <a href="http://goo.gl/8opExB">ES5 implementation</a>.</p>
 <h2>Begin your ES6 adventure here</h2>
@@ -76,11 +76,11 @@ or look at the original <a href="http://goo.gl/8opExB">ES5 implementation</a>.</
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Constant (<code>const</code>) definitions are block scoped, but their values are read-only.
-This means they cannot be re-declared later on. Backbone&#39;s core component 
-definitions don&#39;t need to be modified, so we can conbine constants and an ES6 pattern
-called destructuring assignment to create shorter aliases for Models, Views 
+This means they cannot be re-declared later on. Backbone&#39;s core component
+definitions don&#39;t need to be modified, so we can combine constants and an ES6 pattern
+called destructuring assignment to create shorter aliases for Models, Views
 and other components. This avoids the need to use the more verbose <code>Backbone.*</code>
-forms we&#39;re accustomed to. Destructuring of array and object data uses a syntax 
+forms we&#39;re accustomed to. Destructuring of array and object data uses a syntax
 that mirrors the construction of array and object literals.</p>
 
             </div>
@@ -109,7 +109,7 @@ that mirrors the construction of array and object literals.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>ES6 modules allow us to define isolated blocks of reusable code without 
+              <p>ES6 modules allow us to define isolated blocks of reusable code without
 having to wrap it into an object or closure. Only those functions and
 variables we explicitly <code>export</code> are available to other consumers
 and we can just as easily <code>import</code> functionality from other modules.
@@ -124,7 +124,7 @@ support this form, but you would normally be accepted to write the below as
             <div class="content"><div class='highlight'><pre>module TodoApp {
 
 	<span class="keyword">const</span> ENTER_KEY = <span class="number">13</span>;
-	<span class="keyword">const</span> TodoFilter = <span class="string">''</span>;</pre></div></div>
+	<span class="keyword">let</span> TodoFilter = <span class="string">''</span>;</pre></div></div>
             
         </li>
         
@@ -148,15 +148,15 @@ support this form, but you would normally be accepted to write the below as
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>In JavaScript, we&#39;ve relied on prototypal inheritance anytime we&#39;ve needed 
+              <p>In JavaScript, we&#39;ve relied on prototypal inheritance anytime we&#39;ve needed
 a class-like system. This has led to overly verbose code using custom types.
-ES6 changes that by removing the ugly multi-step inheritance patterns we&#39;re 
+ES6 changes that by removing the ugly multi-step inheritance patterns we&#39;re
 used to and introducing a minimal class syntax that makes defining classes a
-lot more terse. </p>
-<p>ES6 classes desugar to prototypal inheritance behind the scenes and the only 
-real change is that there&#39;s less typing required for us. Classes are compact 
-and we can use an &#39;extend&#39; keyword to implement a new sub-class from a 
-base-class. Below, we do this to define a <code>Todo</code> class which <code>extends</code> Backbone&#39;s 
+lot more terse.</p>
+<p>ES6 classes desugar to prototypal inheritance behind the scenes and the only
+real change is that there&#39;s less typing required for us. Classes are compact
+and we can use an &#39;extend&#39; keyword to implement a new sub-class from a
+base-class. Below, we do this to define a <code>Todo</code> class which <code>extends</code> Backbone&#39;s
 Model component.</p>
 <p>Our basic <strong>Todo</strong> model has <code>title</code> and <code>completed</code> attributes.</p>
 
@@ -293,17 +293,17 @@ class so that it can inherit all of its properties.</p>
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Filter down the list of all todo items that are finished.</p>
-<p>The arrow (<code>=&gt;</code>) below is shorthand syntax for an anonymous 
-function. It doesn&#39;t require the <code>function</code> keyword and the 
-parens are option when there&#39;s a single parameter being used. 
-The value of <code>this</code> is bound to its containing scope, and when 
-an expression follows the arrow - like in this case - the arrow 
-function automatically returns that expression&#39;s value, so you 
-don&#39;t need <code>return</code>. Finally, arrow functions are more lightweight 
-than normal functions, reflecting how they&#39;re expected to be used: 
-they don&#39;t have a prototype and can&#39;t act as constructors. 
-Because of how they inherit <code>this</code> from the containing scope, 
-the meaning of <code>this</code> inside of them can&#39;t be changed with <code>call</code> 
+<p>The arrow (<code>=&gt;</code>) below is shorthand syntax for an anonymous
+function. It doesn&#39;t require the <code>function</code> keyword and the
+parens are optional when there&#39;s a single parameter being used.
+The value of <code>this</code> is bound to its containing scope, and when
+an expression follows the arrow - like in this case - the arrow
+function automatically returns that expression&#39;s value, so you
+don&#39;t need <code>return</code>. Finally, arrow functions are more lightweight
+than normal functions, reflecting how they&#39;re expected to be used:
+they don&#39;t have a prototype and can&#39;t act as constructors.
+Because of how they inherit <code>this</code> from the containing scope,
+the meaning of <code>this</code> inside of them can&#39;t be changed with <code>call</code>
 or <code>apply</code>.</p>
 
             </div>
@@ -340,9 +340,9 @@ or <code>apply</code>.</p>
 an expression to be expanded where multiple arguments or elements are
 normally expected. It can appear in function calls or array literals.
 The three dot syntax below is to indicate a variable number of arguments
-and helps us avoid hacky use of <code>apply</code> for spreading. The old way of 
+and helps us avoid hacky use of <code>apply</code> for spreading. The old way of
 doing things was <code>return this.without.apply(this, this.completed());</code>
-but the new way is significantly shorter and doesn&#39;t require repeating 
+but the new way is significantly shorter and doesn&#39;t require repeating
 the object on which the method is called (<code>this</code> in our case).</p>
 
             </div>
@@ -554,7 +554,7 @@ their values. Properties can process values assigned in a
 post-process step, validating and transforming during assignment.
 In general this means using <code>set</code> and <code>get</code> to bind a property
 of an object to a function which is invoked when the property is
-being set and looked up. <a href="http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html">Read more</a> 
+being set and looked up. <a href="http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html">Read more</a>
 on getters and setters.</p>
 
             </div>
@@ -962,13 +962,13 @@ persisting it to <em>localStorage</em>.</p>
                 <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
               <p><code>param</code> in the <code>filter()</code> function is using ES6&#39;s support for default
-parameter values. Most serious languages support the notion of a default 
-argument for functional parameters but JavaScript hasn&#39;t until now. 
-They basically avoid the need to specify your own defaults within the body of a 
-function. We&#39;ve worked around this by performing logical OR (<code>||</code>) checks 
-against argument values to default if they&#39;re empty/null/undefined or of 
-the incorrect type. Native default parameter values provide a much cleaner 
-solution to this problem. Notably they are only triggered by <code>undefined</code>, and 
+parameter values. Most serious languages support the notion of a default
+argument for functional parameters but JavaScript hasn&#39;t until now.
+They basically avoid the need to specify your own defaults within the body of a
+function. We&#39;ve worked around this by performing logical OR (<code>||</code>) checks
+against argument values to default if they&#39;re empty/null/undefined or of
+the incorrect type. Native default parameter values provide a much cleaner
+solution to this problem. Notably they are only triggered by <code>undefined</code>, and
 not by any falsy value.</p>
 
             </div>
@@ -1031,7 +1031,7 @@ of Todo view items</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
-              <p>We import the classes we defined in the TodoApp module using the <code>import</code> 
+              <p>We import the classes we defined in the TodoApp module using the <code>import</code>
 keyword. Typically, you would store this module in its own separate file
 and import it from there instead, but we&#39;re keeping everything in a single
 script here for demonstration purposes.</p>
@@ -1062,12 +1062,12 @@ script here for demonstration purposes.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
-              <p>Load the application once the DOM is ready, using <code>jQuery.ready</code> 
-<code>() =&gt; { ... }</code> which you&#39;ll see below is the statement form of 
+              <p>Load the application once the DOM is ready, using <code>jQuery.ready</code>
+<code>() =&gt; { ... }</code> which you&#39;ll see below is the statement form of
 the arrow function syntax. Practically speaking, it is lightweight
-sugar for <code>function () { ... }.bind(this)</code>. Apart from containing 
+sugar for <code>function () { ... }.bind(this)</code>. Apart from containing
 statements instead of an automatically-returned expression, it has
-the same properties as the expression-form arrow functions we talked 
+the same properties as the expression-form arrow functions we talked
 about above.</p>
 
             </div>
@@ -1101,7 +1101,7 @@ about above.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-56">&#182;</a>
               </div>
-              <p>Note that the <code>()</code> here may go away soon according to recent 
+              <p>Note that the <code>()</code> here may go away soon according to recent
 <a href="http://esdiscuss.org/topic/more-concise-arrow-functions">es-discuss</a>
 threads.</p>
 
