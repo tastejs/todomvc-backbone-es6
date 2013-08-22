@@ -2,13 +2,13 @@
 
 // Traceur TodoMVC
 // --------------------
-// This is a re-write of the Backbone [TodoMVC](http://todomvc.com) app using 
-// ECMAScript 6 features. It's made possible using 
-// [Traceur](https://github.com/google/traceur-compiler) compiler and was 
-// authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuck, 
+// This is a re-write of the Backbone [TodoMVC](http://todomvc.com) app using
+// ECMAScript 6 features. It's made possible using
+// [Traceur](https://github.com/google/traceur-compiler) compiler and was
+// authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuck,
 // Rick Waldron and Domenic Denicola.
 
-// You can [run](http://goo.gl/tdMZKy) the completed app, 
+// You can [run](http://goo.gl/tdMZKy) the completed app,
 // [watch](https://github.com/addyosmani/traceur-todomvc) the project repository
 // or look at the original [ES5 implementation](http://goo.gl/8opExB).
 
@@ -16,19 +16,19 @@
 // --------------------------------
 
 // Constant (`const`) definitions are block scoped, but their values are read-only.
-// This means they cannot be re-declared later on. Backbone's core component 
+// This means they cannot be re-declared later on. Backbone's core component
 // definitions don't need to be modified, so we can conbine constants and an ES6 pattern
-// called destructuring assignment to create shorter aliases for Models, Views 
+// called destructuring assignment to create shorter aliases for Models, Views
 // and other components. This avoids the need to use the more verbose `Backbone.*`
-// forms we're accustomed to. Destructuring of array and object data uses a syntax 
+// forms we're accustomed to. Destructuring of array and object data uses a syntax
 // that mirrors the construction of array and object literals.
 
 const { Model, View, Collection, Router, LocalStorage } = Backbone;
- 
+
 // TodoApp module
 // ---------------
 
-// ES6 modules allow us to define isolated blocks of reusable code without 
+// ES6 modules allow us to define isolated blocks of reusable code without
 // having to wrap it into an object or closure. Only those functions and
 // variables we explicitly `export` are available to other consumers
 // and we can just as easily `import` functionality from other modules.
@@ -47,16 +47,16 @@ module TodoApp {
 	// Todo Model class
 	// ----------------
 
-	// In JavaScript, we've relied on prototypal inheritance anytime we've needed 
+	// In JavaScript, we've relied on prototypal inheritance anytime we've needed
 	// a class-like system. This has led to overly verbose code using custom types.
-	// ES6 changes that by removing the ugly multi-step inheritance patterns we're 
+	// ES6 changes that by removing the ugly multi-step inheritance patterns we're
 	// used to and introducing a minimal class syntax that makes defining classes a
-	// lot more terse. 
+	// lot more terse.
 
-	// ES6 classes desugar to prototypal inheritance behind the scenes and the only 
-	// real change is that there's less typing required for us. Classes are compact 
-	// and we can use an 'extend' keyword to implement a new sub-class from a 
-	// base-class. Below, we do this to define a `Todo` class which `extends` Backbone's 
+	// ES6 classes desugar to prototypal inheritance behind the scenes and the only
+	// real change is that there's less typing required for us. Classes are compact
+	// and we can use an 'extend' keyword to implement a new sub-class from a
+	// base-class. Below, we do this to define a `Todo` class which `extends` Backbone's
 	// Model component.
 
 	// Our basic **Todo** model has `title` and `completed` attributes.
@@ -103,17 +103,17 @@ module TodoApp {
 
 		// Filter down the list of all todo items that are finished.
 
-		// The arrow (`=>`) below is shorthand syntax for an anonymous 
-		// function. It doesn't require the `function` keyword and the 
-		// parens are option when there's a single parameter being used. 
-		// The value of `this` is bound to its containing scope, and when 
-		// an expression follows the arrow - like in this case - the arrow 
-		// function automatically returns that expression's value, so you 
-		// don't need `return`. Finally, arrow functions are more lightweight 
-		// than normal functions, reflecting how they're expected to be used: 
-		// they don't have a prototype and can't act as constructors. 
-		// Because of how they inherit `this` from the containing scope, 
-		// the meaning of `this` inside of them can't be changed with `call` 
+		// The arrow (`=>`) below is shorthand syntax for an anonymous
+		// function. It doesn't require the `function` keyword and the
+		// parens are option when there's a single parameter being used.
+		// The value of `this` is bound to its containing scope, and when
+		// an expression follows the arrow - like in this case - the arrow
+		// function automatically returns that expression's value, so you
+		// don't need `return`. Finally, arrow functions are more lightweight
+		// than normal functions, reflecting how they're expected to be used:
+		// they don't have a prototype and can't act as constructors.
+		// Because of how they inherit `this` from the containing scope,
+		// the meaning of `this` inside of them can't be changed with `call`
 		// or `apply`.
 		completed() {
 			return this.filter(todo => todo.get('completed'));
@@ -125,9 +125,9 @@ module TodoApp {
 			// an expression to be expanded where multiple arguments or elements are
 			// normally expected. It can appear in function calls or array literals.
 			// The three dot syntax below is to indicate a variable number of arguments
-			// and helps us avoid hacky use of `apply` for spreading. The old way of 
+			// and helps us avoid hacky use of `apply` for spreading. The old way of
 			// doing things was `return this.without.apply(this, this.completed());`
-			// but the new way is significantly shorter and doesn't require repeating 
+			// but the new way is significantly shorter and doesn't require repeating
 			// the object on which the method is called (`this` in our case).
 			return this.without(...this.completed());
 		}
@@ -209,7 +209,7 @@ module TodoApp {
 		// post-process step, validating and transforming during assignment.
 		// In general this means using `set` and `get` to bind a property
 		// of an object to a function which is invoked when the property is
-		// being set and looked up. [Read more](http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html) 
+		// being set and looked up. [Read more](http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html)
 		// on getters and setters.
 		get isHidden() {
 			var isCompleted = this.model.get('completed');
@@ -393,13 +393,13 @@ module TodoApp {
 		}
 
 		// `param` in the `filter()` function is using ES6's support for default
-		// parameter values. Most serious languages support the notion of a default 
-		// argument for functional parameters but JavaScript hasn't until now. 
-		// They basically avoid the need to specify your own defaults within the body of a 
-		// function. We've worked around this by performing logical OR (`||`) checks 
-		// against argument values to default if they're empty/null/undefined or of 
-		// the incorrect type. Native default parameter values provide a much cleaner 
-		// solution to this problem. Notably they are only triggered by `undefined`, and 
+		// parameter values. Most serious languages support the notion of a default
+		// argument for functional parameters but JavaScript hasn't until now.
+		// They basically avoid the need to specify your own defaults within the body of a
+		// function. We've worked around this by performing logical OR (`||`) checks
+		// against argument values to default if they're empty/null/undefined or of
+		// the incorrect type. Native default parameter values provide a much cleaner
+		// solution to this problem. Notably they are only triggered by `undefined`, and
 		// not by any falsy value.
 		filter(param = '') {
 			// Set the current filter to be used
@@ -412,11 +412,11 @@ module TodoApp {
 	}
 }
 
- 
+
 // Importing from a module
 // -----------------------
 
-// We import the classes we defined in the TodoApp module using the `import` 
+// We import the classes we defined in the TodoApp module using the `import`
 // keyword. Typically, you would store this module in its own separate file
 // and import it from there instead, but we're keeping everything in a single
 // script here for demonstration purposes.
@@ -426,12 +426,12 @@ import { AppView, Filters } from TodoApp;
 // Document ready
 // ---------------
 
-// Load the application once the DOM is ready, using `jQuery.ready` 
-// `() => { ... }` which you'll see below is the statement form of 
+// Load the application once the DOM is ready, using `jQuery.ready`
+// `() => { ... }` which you'll see below is the statement form of
 // the arrow function syntax. Practically speaking, it is lightweight
-// sugar for `function () { ... }.bind(this)`. Apart from containing 
+// sugar for `function () { ... }.bind(this)`. Apart from containing
 // statements instead of an automatically-returned expression, it has
-// the same properties as the expression-form arrow functions we talked 
+// the same properties as the expression-form arrow functions we talked
 // about above.
 $(() => {
 	// Finally, we kick things off by creating the **App**.
@@ -440,6 +440,6 @@ $(() => {
 	Backbone.history.start();
 });
 
-// Note that the `()` here may go away soon according to recent 
+// Note that the `()` here may go away soon according to recent
 // [es-discuss](http://esdiscuss.org/topic/more-concise-arrow-functions)
 // threads.
