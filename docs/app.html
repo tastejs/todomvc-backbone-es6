@@ -57,7 +57,7 @@
               <p>This is a re-write of the Backbone <a href="http://todomvc.com">TodoMVC</a> app using
 ECMAScript 6 features. It&#39;s made possible using
 <a href="https://github.com/google/traceur-compiler">Traceur</a> compiler and was
-authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuck,
+authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuk,
 Rick Waldron and Domenic Denicola.</p>
 <p>You can <a href="http://goo.gl/tdMZKy">run</a> the completed app,
 <a href="https://github.com/addyosmani/traceur-todomvc">watch</a> the project repository
@@ -72,10 +72,11 @@ or look at the original <a href="http://goo.gl/8opExB">ES5 implementation</a>.</
         <li id="section-4">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Constant (<code>const</code>) definitions are block scoped, but their values are read-only.
+              <h4>Destructuring Assignments</h4>
+<p>Constant (<code>const</code>) definitions are block scoped, but their values are read-only.
 This means they cannot be re-declared later on. Backbone&#39;s core component
 definitions don&#39;t need to be modified, so we can combine constants and an ES6 pattern
 called destructuring assignment to create shorter aliases for Models, Views
@@ -106,17 +107,18 @@ that mirrors the construction of array and object literals.</p>
         <li id="section-6">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>ES6 modules allow us to define isolated blocks of reusable code without
+              <h4>Modules</h4>
+<p>ES6 modules allow us to define isolated blocks of reusable code without
 having to wrap it into an object or closure. Only those functions and
 variables we explicitly <code>export</code> are available to other consumers
 and we can just as easily <code>import</code> functionality from other modules.
 It&#39;s possible to rename exported values, define modules that are inline
 and even declare defaults for import/export.</p>
 <p>Note: Modules now use string IDs instead of identifiers. Traceur doesn&#39;t yet
-support this form, but you would normally be accepted to write the below as
+support this form, but you would normally be expected to write the below as
 <code>module &quot;TodoApp&quot;</code> or <code>module &quot;todo-app&quot;</code>.</p>
 
             </div>
@@ -145,10 +147,11 @@ support this form, but you would normally be accepted to write the below as
         <li id="section-8">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>In JavaScript, we&#39;ve relied on prototypal inheritance anytime we&#39;ve needed
+              <h4>Classes</h4>
+<p>In JavaScript, we&#39;ve relied on prototypal inheritance anytime we&#39;ve needed
 a class-like system. This has led to overly verbose code using custom types.
 ES6 changes that by removing the ugly multi-step inheritance patterns we&#39;re
 used to and introducing a minimal class syntax that makes defining classes a
@@ -158,7 +161,6 @@ real change is that there&#39;s less typing required for us. Classes are compact
 and we can use an &#39;extend&#39; keyword to implement a new sub-class from a
 base-class. Below, we do this to define a <code>Todo</code> class which <code>extends</code> Backbone&#39;s
 Model component.</p>
-<p>Our basic <strong>Todo</strong> model has <code>title</code> and <code>completed</code> attributes.</p>
 
             </div>
             
@@ -173,8 +175,9 @@ Model component.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Note the omission of the &#39;function&#39; keyword as in ES6 it is entirely optional
-Default attributes for the todo.</p>
+              <p>Note the omission of the &#39;function&#39; keyword— it is entirely optional in
+ES6.</p>
+<p><em>Define some default attributes for the todo.</em></p>
 
             </div>
             
@@ -194,7 +197,7 @@ Default attributes for the todo.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Toggle the <code>completed</code> state of this todo item.</p>
+              <p><em>Toggle the <code>completed</code> state of this todo item.</em></p>
 
             </div>
             
@@ -240,10 +243,11 @@ server.</p>
         <li id="section-13">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>Specifying a <code>constructor</code> lets us define the class constructor. Use of the
+              <h4>Constructors and Super Constructors</h4>
+<p>Specifying a <code>constructor</code> lets us define the class constructor. Use of the
 <code>super</code> keyword in your constructor lets you call the constructor of a parent
 class so that it can inherit all of its properties.</p>
 
@@ -261,7 +265,7 @@ class so that it can inherit all of its properties.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>Reference to this collection&#39;s model.</p>
+              <p><em>Hold a reference to this collection&#39;s model.</em></p>
 
             </div>
             
@@ -276,7 +280,7 @@ class so that it can inherit all of its properties.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Save all of the todo items under the <code>&#39;todos&#39;</code> namespace.</p>
+              <p><em>Save all of the todo items under the <code>&#39;todos&#39;</code> namespace.</em></p>
 
             </div>
             
@@ -292,19 +296,30 @@ class so that it can inherit all of its properties.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <p>Filter down the list of all todo items that are finished.</p>
-<p>The arrow (<code>=&gt;</code>) below is shorthand syntax for an anonymous
+              <p><em>Filter down the list of all todo items that are finished.</em></p>
+<h4>Arrow Functions (Expressions)</h4>
+<p>The arrow (<code>=&gt;</code>) is shorthand syntax for an anonymous
 function. It doesn&#39;t require the <code>function</code> keyword and the
 parens are optional when there&#39;s a single parameter being used.
 The value of <code>this</code> is bound to its containing scope, and when
 an expression follows the arrow - like in this case - the arrow
 function automatically returns that expression&#39;s value, so you
-don&#39;t need <code>return</code>. Finally, arrow functions are more lightweight
-than normal functions, reflecting how they&#39;re expected to be used:
+don&#39;t need <code>return</code>.</p>
+<p>Arrow functions are more lightweight
+than normal functions, reflecting how they&#39;re expected to be used—
 they don&#39;t have a prototype and can&#39;t act as constructors.
 Because of how they inherit <code>this</code> from the containing scope,
 the meaning of <code>this</code> inside of them can&#39;t be changed with <code>call</code>
 or <code>apply</code>.</p>
+<p>To recap, when using <code>=&gt;</code>:</p>
+<ul>
+<li>The <code>function</code> keyword isn&#39;t required.</li>
+<li>Parentheses are optional with a single parameter.</li>
+<li><code>this</code> is bound to the containing scope— change the context with <code>call</code>
+or <code>apply</code>.</li>
+<li><code>return</code> is unnecessary with a single expression.</li>
+<li>Functions are lightweight— no prototypes or constructors.</li>
+</ul>
 
             </div>
             
@@ -321,7 +336,7 @@ or <code>apply</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>Filter down the list to only todo items that are still not finished.</p>
+              <p><em>Filter down the list to only todo items that are still not finished.</em></p>
 
             </div>
             
@@ -340,10 +355,13 @@ or <code>apply</code>.</p>
 an expression to be expanded where multiple arguments or elements are
 normally expected. It can appear in function calls or array literals.
 The three dot syntax below is to indicate a variable number of arguments
-and helps us avoid hacky use of <code>apply</code> for spreading. The old way of
-doing things was <code>return this.without.apply(this, this.completed());</code>
-but the new way is significantly shorter and doesn&#39;t require repeating
-the object on which the method is called (<code>this</code> in our case).</p>
+and helps us avoid hacky use of <code>apply</code> for spreading.</p>
+<p>Compare the old way...</p>
+<pre><code>return this.without.apply(this, this.completed());</code></pre>
+<p>...with the new, signifcantly shorter way...</p>
+<pre><code>return this.without(...this.completed());</code></pre>
+<p>This doesn&#39;t require repeating the object on which the method is called
+(<code>this</code> in our case).</p>
 
             </div>
             
@@ -359,8 +377,9 @@ the object on which the method is called (<code>this</code> in our case).</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>We keep the Todos in sequential order, despite being saved by unordered
-GUID in the database. This generates the next order number for new items.</p>
+              <p><em>We keep the Todos in sequential order, despite being saved by unordered
+GUID in the database. This generates the next order number for new
+items.</em></p>
 
             </div>
             
@@ -381,7 +400,7 @@ GUID in the database. This generates the next order number for new items.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>Todos are sorted by their original insertion order.</p>
+              <p><em>Todos are sorted by their original insertion order.</em></p>
 
             </div>
             
@@ -399,11 +418,11 @@ GUID in the database. This generates the next order number for new items.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>Create our global collection of <strong>Todos</strong>.</p>
+              <p><em>Create our global collection of <strong>Todos</strong>.</em></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	<span class="keyword">var</span> Todos = <span class="keyword">new</span> TodoList();</pre></div></div>
+            <div class="content"><div class='highlight'><pre>	<span class="keyword">let</span> Todos = <span class="keyword">new</span> TodoList();</pre></div></div>
             
         </li>
         
@@ -427,7 +446,7 @@ GUID in the database. This generates the next order number for new items.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
-              <p>The DOM element for a todo item...</p>
+              <p><em>The DOM element for a todo item...</em></p>
 
             </div>
             
@@ -444,7 +463,7 @@ GUID in the database. This generates the next order number for new items.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
-              <p>... is a list tag.</p>
+              <p><em>... is a list tag.</em></p>
 
             </div>
             
@@ -459,9 +478,9 @@ GUID in the database. This generates the next order number for new items.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
-              <p>The TodoView listens for changes to its model, re-rendering. Since there&#39;s
+              <p><em>The TodoView listens for changes to its model, re-rendering. Since there&#39;s
 a one-to-one correspondence between a <strong>Todo</strong> and a <strong>TodoView</strong> in this
-app, we set a direct reference on the model for convenience.</p>
+app, we set a direct reference on the model for convenience.</em></p>
 
             </div>
             
@@ -476,7 +495,7 @@ app, we set a direct reference on the model for convenience.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
-              <p>Cache the template function for a single item.</p>
+              <p><em>Cache the template function for a single item.</em></p>
 
             </div>
             
@@ -493,7 +512,7 @@ app, we set a direct reference on the model for convenience.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
-              <p>The DOM events specific to an item.</p>
+              <p><em>Define the DOM events specific to an item.</em></p>
 
             </div>
             
@@ -522,7 +541,7 @@ app, we set a direct reference on the model for convenience.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
-              <p>Re-render the contents of the todo item.</p>
+              <p><em>Re-render the contents of the todo item.</em></p>
 
             </div>
             
@@ -544,15 +563,16 @@ app, we set a direct reference on the model for convenience.</p>
         <li id="section-29">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
-              <p><code>isHidden()</code> is using something we call a property getter.
+              <h4>Property Getters and Setters</h4>
+<p><code>isHidden()</code> is using something we call a property getter.
 Although technically part of ECMAScript 5.1, getters and
 setters allow us to write and read properties that lazily compute
 their values. Properties can process values assigned in a
-post-process step, validating and transforming during assignment.
-In general this means using <code>set</code> and <code>get</code> to bind a property
+post-process step, validating and transforming during assignment.</p>
+<p>In general, this means using <code>set</code> and <code>get</code> to bind a property
 of an object to a function which is invoked when the property is
 being set and looked up. <a href="http://ariya.ofilabs.com/2013/03/es6-and-method-definitions.html">Read more</a>
 on getters and setters.</p>
@@ -560,7 +580,7 @@ on getters and setters.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>		get isHidden() {
-			<span class="keyword">var</span> isCompleted = <span class="keyword">this</span>.model.get(<span class="string">'completed'</span>);
+			<span class="keyword">const</span> isCompleted = <span class="keyword">this</span>.model.get(<span class="string">'completed'</span>);
 			<span class="keyword">return</span> (<span class="comment">// hidden cases only</span>
 				(!isCompleted &amp;&amp; TodoFilter === <span class="string">'completed'</span>) ||
 				(isCompleted &amp;&amp; TodoFilter === <span class="string">'active'</span>)
@@ -576,7 +596,7 @@ on getters and setters.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>Toggle the <code>&quot;completed&quot;</code> state of the model.</p>
+              <p><em>Toggle the <code>&#39;completed&#39;</code> state of the model.</em></p>
 
             </div>
             
@@ -593,12 +613,12 @@ on getters and setters.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
-              <p>Switch this view into <code>&#39;editing&#39;</code> mode, displaying the input field.</p>
+              <p><em>Switch this view into <code>&#39;editing&#39;</code> mode, displaying the input field.</em></p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>		edit() {
-			<span class="keyword">var</span> value = <span class="keyword">this</span>.input.val();
+			<span class="keyword">const</span> value = <span class="keyword">this</span>.input.val();
 
 			<span class="keyword">this</span>.$el.addClass(<span class="string">'editing'</span>);
 			<span class="keyword">this</span>.input.val(value).focus();
@@ -613,12 +633,12 @@ on getters and setters.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <p>Close the <code>&#39;editing&#39;</code> mode, saving changes to the todo.</p>
+              <p><em>Close the <code>&#39;editing&#39;</code> mode, saving changes to the todo.</em></p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>		close() {
-			<span class="keyword">var</span> title = <span class="keyword">this</span>.input.val();
+			<span class="keyword">const</span> title = <span class="keyword">this</span>.input.val();
 
 			<span class="keyword">if</span> (title) {
 				<span class="keyword">this</span>.model.save({ title });
@@ -638,7 +658,7 @@ on getters and setters.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
-              <p>If you hit <code>enter</code>, we&#39;re through editing the item.</p>
+              <p><em>If you hit <code>enter</code>, we&#39;re through editing the item.</em></p>
 
             </div>
             
@@ -657,7 +677,7 @@ on getters and setters.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
-              <p>Remove the item, destroy the model.</p>
+              <p><em>Remove the item and destroy the model.</em></p>
 
             </div>
             
@@ -688,7 +708,7 @@ on getters and setters.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
-              <p>Our overall <strong>AppView</strong> is the top-level piece of UI.</p>
+              <p><em>Our overall <strong>AppView</strong> is the top-level piece of UI.</em></p>
 
             </div>
             
@@ -705,8 +725,8 @@ on getters and setters.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
-              <p>Instead of generating a new element, bind to the existing skeleton of
-the App already present in the HTML.</p>
+              <p><em>Instead of generating a new element, bind to the existing skeleton of
+the App already present in the HTML.</em></p>
 
             </div>
             
@@ -723,7 +743,7 @@ the App already present in the HTML.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
-              <p>Delegated events for creating new items, and clearing completed ones.</p>
+              <p><em>Delegate events for creating new items and clearing completed ones.</em></p>
 
             </div>
             
@@ -742,9 +762,9 @@ the App already present in the HTML.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
-              <p>At initialization we bind to the relevant events on the <code>Todos</code>
+              <p><em>At initialization, we bind to the relevant events on the <code>Todos</code>
 collection, when items are added or changed. Kick things off by
-loading any preexisting todos that might be saved in <em>localStorage</em>.</p>
+loading any preexisting todos that might be saved in localStorage.</em></p>
 
             </div>
             
@@ -773,8 +793,8 @@ loading any preexisting todos that might be saved in <em>localStorage</em>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
-              <p>Re-rendering the App just means refreshing the statistics -- the rest
-of the app doesn&#39;t change.</p>
+              <p><em>Re-rendering the App just means refreshing the statistics— the rest of
+the app doesn&#39;t change.</em></p>
 
             </div>
             
@@ -813,8 +833,8 @@ of the app doesn&#39;t change.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
-              <p>Add a single todo item to the list by creating a view for it, and
-appending its element to the <code>&lt;ul&gt;</code>.</p>
+              <p><em>Add a single todo item to the list by creating a view for it, then
+appending its element to the <code>&lt;ul&gt;</code>.</em></p>
 
             </div>
             
@@ -832,7 +852,7 @@ appending its element to the <code>&lt;ul&gt;</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
-              <p>Add all items in the <strong>Todos</strong> collection at once.</p>
+              <p><em>Add all items in the <strong>Todos</strong> collection at once.</em></p>
 
             </div>
             
@@ -858,7 +878,7 @@ appending its element to the <code>&lt;ul&gt;</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
-              <p>Generate the attributes for a new Todo item.</p>
+              <p><em>Generate the attributes for a new Todo item.</em></p>
 
             </div>
             
@@ -879,8 +899,8 @@ appending its element to the <code>&lt;ul&gt;</code>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
-              <p>If you hit return in the main input field, create new <strong>Todo</strong> model,
-persisting it to <em>localStorage</em>.</p>
+              <p><em>If you hit <code>enter</code> in the main input field, create a new <strong>Todo</strong> model,
+persisting it to localStorage.</em></p>
 
             </div>
             
@@ -902,7 +922,7 @@ persisting it to <em>localStorage</em>.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
-              <p>Clear all completed todo items, destroying their models.</p>
+              <p><em>Clear all completed todo items and destroy their models.</em></p>
 
             </div>
             
@@ -958,18 +978,29 @@ persisting it to <em>localStorage</em>.</p>
         <li id="section-48">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-48">&#182;</a>
               </div>
-              <p><code>param</code> in the <code>filter()</code> function is using ES6&#39;s support for default
-parameter values. Most serious languages support the notion of a default
-argument for functional parameters but JavaScript hasn&#39;t until now.
-They basically avoid the need to specify your own defaults within the body of a
+              <h4>Default Parameters</h4>
+<p><code>param</code> in the <code>filter()</code> function is using ES6&#39;s support for default
+parameter values. Many languages support the notion of a default
+argument for functional parameters, but JavaScript hasn&#39;t until now.</p>
+<p>Default parameters avoid the need to specify your own defaults within the body of a
 function. We&#39;ve worked around this by performing logical OR (<code>||</code>) checks
 against argument values to default if they&#39;re empty/null/undefined or of
 the incorrect type. Native default parameter values provide a much cleaner
 solution to this problem. Notably they are only triggered by <code>undefined</code>, and
 not by any falsy value.</p>
+<p>Compare the old way...</p>
+<pre><code>function hello(firstName, lastName) {
+    firstName = firstName || &#39;Joe&#39;;
+    lastName = lastName || &#39;Schmo&#39;;
+    return &#39;Hello, &#39; + firstName + &#39; &#39; + lastName;
+}</code></pre>
+<p>...to the new way...</p>
+<pre><code>function hello(firstName = &#39;Joe&#39;, lastName = &#39;Schmo&#39;) {
+    return &#39;Hello, &#39; + firstName + &#39; &#39; + lastName;
+}</code></pre>
 
             </div>
             
@@ -984,7 +1015,7 @@ not by any falsy value.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-49">&#182;</a>
               </div>
-              <p>Set the current filter to be used</p>
+              <p><em>Set the current filter to be used.</em></p>
 
             </div>
             
@@ -999,8 +1030,8 @@ not by any falsy value.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-50">&#182;</a>
               </div>
-              <p>Trigger a collection filter event, causing hiding/unhiding
-of Todo view items</p>
+              <p><em>Trigger a collection filter event, causing hiding/unhiding
+of Todo view items.</em></p>
 
             </div>
             
@@ -1028,10 +1059,11 @@ of Todo view items</p>
         <li id="section-52">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-52">&#182;</a>
               </div>
-              <p>We import the classes we defined in the TodoApp module using the <code>import</code>
+              <h4>Imports</h4>
+<p>We import the classes we defined in the TodoApp module using the <code>import</code>
 keyword. Typically, you would store this module in its own separate file
 and import it from there instead, but we&#39;re keeping everything in a single
 script here for demonstration purposes.</p>
@@ -1059,16 +1091,17 @@ script here for demonstration purposes.</p>
         <li id="section-54">
             <div class="annotation">
               
-              <div class="pilwrap ">
+              <div class="pilwrap for-h4">
                 <a class="pilcrow" href="#section-54">&#182;</a>
               </div>
-              <p>Load the application once the DOM is ready, using <code>jQuery.ready</code>
+              <h4>Arrow Functions (Statements)</h4>
+<p>Load the application once the DOM is ready, using <code>jQuery.ready</code>
 <code>() =&gt; { ... }</code> which you&#39;ll see below is the statement form of
 the arrow function syntax. Practically speaking, it is lightweight
-sugar for <code>function () { ... }.bind(this)</code>. Apart from containing
-statements instead of an automatically-returned expression, it has
-the same properties as the expression-form arrow functions we talked
-about above.</p>
+sugar for <code>function () { ... }.bind(this)</code>.</p>
+<p>Apart from containing statements instead of an automatically-returned
+expression, it has the same properties as the expression-form arrow functions
+we talked about above.</p>
 
             </div>
             
@@ -1083,7 +1116,7 @@ about above.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-55">&#182;</a>
               </div>
-              <p>Finally, we kick things off by creating the <strong>App</strong>.</p>
+              <p><em>Finally, we kick things off by creating the <strong>App</strong>.</em></p>
 
             </div>
             
