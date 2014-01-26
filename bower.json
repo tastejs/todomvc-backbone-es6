@@ -5,6 +5,7 @@
     "todomvc-common": "~0.1.6",
     "jquery": "~2.0.0",
     "lodash": "~1.2.1",
-    "backbone": "~1.0.0"
+    "backbone": "~1.0.0",
+    "es6-module-loader": "~0.4.2"
   }
 }
