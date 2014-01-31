@@ -5,6 +5,10 @@ This repo contains an implementation of the Backbone TodoMVC app rewritten to us
 Run `index.html` on a server to try out the app, or read `docs/app.html` for the literate Docco version.
 
 
+## Bower
+
+This repository uses [Bower](http://bower.io) and a checked in version of `bower_components` for dependencies. To update dependencies to the latest version run `bower update`.
+
 ## Docco compilation
 
 * `npm install -g docco`
