@@ -2,8 +2,8 @@
 
 This repo contains an implementation of the Backbone TodoMVC app rewritten to use ES6 modules, classes and other features. Using the [Traceur compiler](https://github.com/google/traceur-compiler), we're able to use these features in today's browsers with it being dynamically interpreted at runtime.
 
-* [Demo](http://addyosmani.github.io/traceur-todomvc/)
-* Documentation: [app.js](http://addyosmani.github.io/traceur-todomvc/docs/app.html) and [todo-app.js](http://addyosmani.github.io/traceur-todomvc/docs/todo-app.html).
+* [Demo](http://addyosmani.github.io/todomvc-backbone-es6/)
+* Documentation: [app.js](http://addyosmani.github.io/todomvc-backbone-es6/docs/app.html) and [todo-app.js](http://addyosmani.github.io/todomvc-backbone-es6/docs/todo-app.html).
 
 Run `index.html` on a server to try out the app, or read `docs/app.html` for the literate Docco version.
 
