@@ -54,11 +54,7 @@
 		<script src="bower_components/backbone/backbone.js"></script>
 		<script src="js/lib/backbone/backbone.localStorage.js"></script>
 
-		<script src="js/lib/traceur/traceur.js"></script>
-		<script src="js/lib/traceur/bootstrap.js"></script>
-		<script>
-			traceur.options.experimental = true;
-		</script>
-		<script type="text/traceur" src="js/app.js"></script>
+		<script src="bower_components/es6-module-loader/dist/es6-module-loader.js"></script>
+		<script>System.import('js/app')</script>
 	</body>
 </html>
