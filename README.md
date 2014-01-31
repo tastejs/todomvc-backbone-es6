@@ -7,6 +7,9 @@ This repo contains an implementation of the Backbone TodoMVC app rewritten to us
 
 Run `index.html` on a server to try out the app, or read `docs/app.html` for the literate Docco version.
 
+## Preview
+
+<img style="width:650px" src="http://i.imgur.com/p4vqaEw.png"/>
 
 ## Bower
 
