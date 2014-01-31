@@ -6,7 +6,7 @@
 // ECMAScript 6 features. It's made possible using
 // [Traceur](https://github.com/google/traceur-compiler) compiler and was
 // authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuk,
-// Rick Waldron and Domenic Denicola.
+// Rick Waldron, Domenic Denicola and Guy Bedford.
 
 // You can [run](http://goo.gl/tdMZKy) the completed app,
 // [watch](https://github.com/addyosmani/traceur-todomvc) the project repository
