@@ -39,6 +39,3 @@ $(() => {
   Backbone.history.start();
 });
 
-// Note that the `()` here may go away soon according to recent
-// [es-discuss](http://esdiscuss.org/topic/more-concise-arrow-functions)
-// threads.
