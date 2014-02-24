@@ -20,7 +20,8 @@
 // that mirrors the construction of array and object literals.
 
 // Const currently disabled due to https://github.com/google/traceur-compiler/issues/595
-// const { Model, View, Collection, Router, LocalStorage } = Backbone;
+// but would otherwise be written:
+// `const { Model, View, Collection, Router, LocalStorage } = Backbone;`
 var { Model, View, Collection, Router, LocalStorage } = Backbone;
 
 

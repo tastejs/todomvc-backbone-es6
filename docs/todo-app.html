@@ -38,10 +38,10 @@
         <li id="section-2">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <h2>TodoApp Module</h2>
+              <h2 id="todoapp-module">TodoApp Module</h2>
 
             </div>
             
@@ -60,7 +60,7 @@ variables we explicitly <code>export</code> are available to other consumers
 and we can just as easily <code>import</code> functionality from other modules.
 It&#39;s possible to rename exported values, define modules that are inline
 and even declare defaults for import/export.</p>
-<h4>Destructuring Assignments</h4>
+<h4 id="destructuring-assignments">Destructuring Assignments</h4>
 <p>Constant (<code>const</code>) definitions are block scoped, but their values are read-only.
 This means they cannot be re-declared later on. Backbone&#39;s core component
 definitions don&#39;t need to be modified, so we can combine constants and an ES6 pattern
@@ -69,7 +69,8 @@ and other components. This avoids the need to use the more verbose <code>Backbon
 forms we&#39;re accustomed to. Destructuring of array and object data uses a syntax
 that mirrors the construction of array and object literals.</p>
 <p>Const currently disabled due to <a href="https://github.com/google/traceur-compiler/issues/595">https://github.com/google/traceur-compiler/issues/595</a>
-const { Model, View, Collection, Router, LocalStorage } = Backbone;</p>
+but would otherwise be written:
+<code>const { Model, View, Collection, Router, LocalStorage } = Backbone;</code></p>
 
             </div>
             
@@ -86,10 +87,10 @@ const { Model, View, Collection, Router, LocalStorage } = Backbone;</p>
         <li id="section-4">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <h2>Todo Model class</h2>
+              <h2 id="todo-model-class">Todo Model class</h2>
 
             </div>
             
@@ -99,10 +100,10 @@ const { Model, View, Collection, Router, LocalStorage } = Backbone;</p>
         <li id="section-5">
             <div class="annotation">
               
-              <div class="pilwrap for-h4">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <h4>Classes</h4>
+              <h4 id="classes">Classes</h4>
 <p>In JavaScript, we&#39;ve relied on prototypal inheritance anytime we&#39;ve needed
 a class-like system. This has led to overly verbose code using custom types.
 ES6 changes that by removing the ugly multi-step inheritance patterns we&#39;re
@@ -166,10 +167,10 @@ ES6.</p>
         <li id="section-8">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <h2>TodoList Collection class</h2>
+              <h2 id="todolist-collection-class">TodoList Collection class</h2>
 
             </div>
             
@@ -195,10 +196,10 @@ server.</p>
         <li id="section-10">
             <div class="annotation">
               
-              <div class="pilwrap for-h4">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <h4>Constructors and Super Constructors</h4>
+              <h4 id="constructors-and-super-constructors">Constructors and Super Constructors</h4>
 <p>Specifying a <code>constructor</code> lets us define the class constructor. Use of the
 <code>super</code> keyword in your constructor lets you call the constructor of a parent
 class so that it can inherit all of its properties.</p>
@@ -249,7 +250,7 @@ class so that it can inherit all of its properties.</p>
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p><em>Filter down the list of all todo items that are finished.</em></p>
-<h4>Arrow Functions (Expressions)</h4>
+<h4 id="arrow-functions-expressions-">Arrow Functions (Expressions)</h4>
 <p>The arrow (<code>=&gt;</code>) is shorthand syntax for an anonymous
 function. It doesn&#39;t require the <code>function</code> keyword and the
 parens are optional when there&#39;s a single parameter being used.
@@ -382,10 +383,10 @@ items.</em></p>
         <li id="section-19">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <h2>Todo Item View class</h2>
+              <h2 id="todo-item-view-class">Todo Item View class</h2>
 
             </div>
             
@@ -515,10 +516,10 @@ app, we set a direct reference on the model for convenience.</em></p>
         <li id="section-26">
             <div class="annotation">
               
-              <div class="pilwrap for-h4">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
-              <h4>Property Getters and Setters</h4>
+              <h4 id="property-getters-and-setters">Property Getters and Setters</h4>
 <p><code>isHidden()</code> is using something we call a property getter.
 Although technically part of ECMAScript 5.1, getters and
 setters allow us to write and read properties that lazily compute
@@ -644,10 +645,10 @@ on getters and setters.</p>
         <li id="section-32">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
-              <h2>The Application class</h2>
+              <h2 id="the-application-class">The Application class</h2>
 
             </div>
             
@@ -895,10 +896,10 @@ persisting it to localStorage.</em></p>
         <li id="section-43">
             <div class="annotation">
               
-              <div class="pilwrap for-h2">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
-              <h2>The Filters Router class</h2>
+              <h2 id="the-filters-router-class">The Filters Router class</h2>
 
             </div>
             
@@ -930,10 +931,10 @@ persisting it to localStorage.</em></p>
         <li id="section-45">
             <div class="annotation">
               
-              <div class="pilwrap for-h4">
+              <div class="pilwrap ">
                 <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
-              <h4>Default Parameters</h4>
+              <h4 id="default-parameters">Default Parameters</h4>
 <p><code>param</code> in the <code>filter()</code> function is using ES6&#39;s support for default
 parameter values. Many languages support the notion of a default
 argument for functional parameters, but JavaScript hasn&#39;t until now.</p>
