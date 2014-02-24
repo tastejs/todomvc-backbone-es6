@@ -108,8 +108,6 @@ class TodoList extends Collection {
   //
   // * The `function` keyword isn't required.
   // * Parentheses are optional with a single parameter.
-  // * `this` is bound to the containing scope— change the context with `call`
-  // or `apply`.
   // * `return` is unnecessary with a single expression.
   // * Functions are lightweight— no prototypes or constructors.
   completed() {
