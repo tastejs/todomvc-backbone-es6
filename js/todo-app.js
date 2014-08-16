@@ -101,9 +101,8 @@ class TodoList extends Collection {
   // Arrow functions are more lightweight
   // than normal functions, reflecting how they're expected to be used—
   // they don't have a prototype and can't act as constructors.
-  // Because of how they inherit `this` from the containing scope,
-  // the meaning of `this` inside of them can't be changed with `call`
-  // or `apply`.
+  // Because of how they inherit `this` from the containing scope, the 
+  // meaning of `this` inside of them __can__ be changed with `call` or `apply`.
   //
   // To recap, when using `=>`:
   //
