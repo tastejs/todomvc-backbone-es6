@@ -18,7 +18,7 @@ This repository uses [Bower](http://bower.io) and a checked in version of `bower
 ## Docco compilation
 
 * `npm install -g docco`
-* `docco js/app.js`
+* `docco js/todo-app.js js/app.js`
 * Update the `docs` directory
 
 
