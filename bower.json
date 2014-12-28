@@ -8,5 +8,8 @@
     "backbone": "~1.1.0",
     "es6-module-loader": "~0.4.2",
     "backbone.localStorage": "~1.1.7"
+  },
+  "resolutions": {
+    "backbone": "~1.1.0"
   }
 }
