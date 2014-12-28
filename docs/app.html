@@ -51,7 +51,7 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="comment">/*jshint esnext:true */</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/*jshint esnext:true */</span></pre></div></div>
             
         </li>
         
@@ -76,14 +76,10 @@
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>This is a re-write of the Backbone <a href="http://todomvc.com">TodoMVC</a> app using
-ECMAScript 6 features. It&#39;s made possible using
+ECMAScript 6 features. It’s made possible using
 <a href="https://github.com/google/traceur-compiler">Traceur</a> compiler and was
 authored by Addy Osmani, Pascal Hartig, Sindre Sorhus, Stephen Sawchuk,
 Rick Waldron, Domenic Denicola and Guy Bedford.</p>
-<p>You can <a href="http://addyosmani.github.io/todomvc-backbone-es6/">run</a> the completed app,
-<a href="https://github.com/addyosmani/todomvc-backbone-es6">watch</a> the project repository
-or look at the original <a href="http://goo.gl/8opExB">ES5 implementation</a>.</p>
-<h2 id="begin-your-es6-adventure-here">Begin your ES6 adventure here</h2>
 
             </div>
             
@@ -96,13 +92,11 @@ or look at the original <a href="http://goo.gl/8opExB">ES5 implementation</a>.</
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <h4 id="imports">Imports</h4>
-<p>We import the classes we defined in the TodoApp module using the <code>import</code>
-keyword.</p>
+              <p>You can <a href="http://addyosmani.github.io/todomvc-backbone-es6/">run</a> the completed app,
+<a href="https://github.com/addyosmani/todomvc-backbone-es6">watch</a> the project repository
+or look at the original <a href="http://goo.gl/8opExB">ES5 implementation</a>.</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>import {AppView, Filters} from <span class="string">'./todo-app'</span>;</pre></div></div>
             
         </li>
         
@@ -113,7 +107,7 @@ keyword.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <h2 id="document-ready">Document ready</h2>
+              <h2 id="begin-your-es6-adventure-here">Begin your ES6 adventure here</h2>
 
             </div>
             
@@ -126,9 +120,63 @@ keyword.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h4 id="imports">Imports</h4>
+<p>We import the classes we defined in the TodoApp module using the <code>import</code>
+keyword.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>import {AppView, Filters} from <span class="hljs-string">'./todo-app'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="document-ready">Document ready</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
               <h4 id="arrow-functions-statements-">Arrow Functions (Statements)</h4>
 <p>Load the application once the DOM is ready, using <code>jQuery.ready</code>
-<code>() =&gt; { ... }</code> which you&#39;ll see below is the statement form of
+<code>() =&gt; { ... }</code> which you’ll see below is the statement form of
 the arrow function syntax. Practically speaking, it is lightweight
 sugar for <code>function () { ... }.bind(this)</code>.</p>
 <p>Apart from containing statements instead of an automatically-returned
@@ -142,18 +190,18 @@ we talked about above.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p><em>Finally, we kick things off by creating the <strong>App</strong>.</em></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">new</span> AppView();
-  <span class="keyword">new</span> Filters();
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">new</span> AppView();
+  <span class="hljs-keyword">new</span> Filters();
   Backbone.history.start();
 });</pre></div></div>
             
